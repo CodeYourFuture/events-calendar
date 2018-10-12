@@ -11,6 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "kerberos": "*",
+    "lodash": "^4.17.11",
+    "mongodb": "*",
+    "mongoose": "^5.3.2",
     "nodemon": "^1.18.4"
   }
 }
