@@ -2,19 +2,33 @@ const testData = [
     {
         name: "CSS Class",
         description:
-            "Class work: introduction to CSS features, margins, grid, and basic CSS ",
-        date: "Date: 16/10/2018"
+            "introduction to CSS features, margins, grid, and basic CSS ",
+        date: "16/10/2018",
+        floaters: [
+            {
+                firstName: "German",
+                surname: "Yu",
+                email: ""
+            },
+            {
+                firstName: "John",
+                surname: "Xz",
+                email: ""
+            }
+        ]
     },
     {
         name: "JavaScript",
-        description: "Class work: varialbles, Arrays, and Objects",
-        date: "Date: 20/10/2018"
+        description: "varialbles, Arrays, and Objects",
+        date: "20/10/2018",
+        floaters: []
     },
     {
         name: "React",
         description:
-            "Class work: introducing components, Creating Funtions and Classes, and props",
-        date: "Date: 23/10/2018"
+            "introducing components, Creating Funtions and Classes, and props",
+        date: "23/10/2018",
+        floaters: []
     }
 ];
-export {testData};
+export { testData };
