@@ -16,13 +16,13 @@ Creating new cluster 9.5/main ...
 User: postgres
 -----------------------------
 
-connect to the sever: 
+connect to the database: 
 
 sudo -u postgres psql
 
 -----------------------------
 
-Create databse: 
+Create database: 
 
 create database events_calendar;
 
