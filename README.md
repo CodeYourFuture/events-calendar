@@ -16,7 +16,7 @@ Creating new cluster 9.5/main ...
 User: postgres
 -----------------------------
 
-connect to the database: 
+Connect to database server: 
 
 sudo -u postgres psql
 
