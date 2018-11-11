@@ -7,6 +7,7 @@ import Admin from "./Components/Admin/admin.js";
 import AdminEvents from "./Components/Admin/Admin_events.js";
 import FloaterForm from "./Components/Floaters/FloaterForm";
 import mainPage from "./Components/MainPage";
+import Navigation from "./Components/Navigation";
 
 class App extends Component {
     state = {
@@ -31,6 +32,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <Navigation />
                 <BrowserRouter>
                     <div>
                         <Route
