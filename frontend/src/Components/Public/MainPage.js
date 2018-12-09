@@ -1,10 +1,10 @@
 import React from "react";
 import "../../Style/MainPage.css";
 const mainPage = () => (
-    <div className="container">
+    <div className="contain container">
         <div className="row justify-content-md-center title">
             <div className="col-md-auto">
-                <h1 className="mb-3 mt-5">Events Calendar</h1>
+                <h1 className="event-title">Events Calendar</h1>
             </div>
         </div>
         <div>
@@ -25,6 +25,8 @@ const mainPage = () => (
                     </a>
                 </h2>
             </ul>
+
+
         </div>
     </div>
 );

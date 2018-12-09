@@ -30,7 +30,7 @@ const Adminevents = props => {
                     </button>
                 </a>
             </div>
-            {props.events.map(function(event, i) {
+            {props.events.map(function (event, i) {
                 return (
                     <div className="event" key={i}>
                         <Event
@@ -77,7 +77,7 @@ const Adminevents = props => {
                         </Popup>
                         <button
                             className="btn btn-danger  mr-4 mb-2 mt-4"
-                            onClick={function() {
+                            onClick={function () {
                                 props.deleteEvent(event.event_id);
                             }}
                         >

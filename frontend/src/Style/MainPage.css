@@ -7,6 +7,10 @@ h2 a , h2 a:hover{
 .nav-item{
     background-color:#4286f4;
     transition: all 0.3s ease-out;
+    width:200px;
+    position: relative;
+    bottom: 0;
+    top:150px
 }
 li:hover{
     transition: all 0.3s ease-out;
@@ -15,4 +19,19 @@ li:hover{
 }
 a:link{
     text-decoration: none;
+}
+.contain{
+    background-color: black;
+    background-image:url('https://codeyourfuture.io/static/media/CYF-homepage.6d4f6c89.png');
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+.contain:hover{
+     background-blend-mode: luminosity;
+    
+}
+.event-title{
+    margin-top:240px;
+    color:white;
+text-shadow: 1px 2px 4px rgba(0, 0, 0, 1);
 }
