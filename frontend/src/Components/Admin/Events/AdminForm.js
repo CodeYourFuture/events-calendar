@@ -18,7 +18,7 @@ export default class Form extends React.Component {
             event_date: this.event_dateRef.current.value,
             description: this.descriptionRef.current.value
         };
-        fetch("/events", {
+        fetch("/api/events", {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"

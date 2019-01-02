@@ -26,6 +26,8 @@
 
 `grant all privileges on database events_calendar to eventsuser;`
 
+`ALTER USER eventsuser WITH SUPERUSER;`
+
 5. Login user:
 
 `sudo -u postgres psql events_calendar -h localhost -U eventsuser`
@@ -80,6 +82,8 @@ Save the file Ctrl + O, type the file name pg_hba.conf and overwrite it and exit
 `alter user eventsuser with encrypted password 'eventsuser147';`
 
 `grant all privileges on database events_calendar to eventsuser;`
+
+`ALTER USER eventsuser WITH SUPERUSER;`
 
 5. Login user:
 

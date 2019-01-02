@@ -7,7 +7,6 @@ export default class EditForm extends React.Component {
         event_date: "",
         description: "",
         message: false
-
     };
     constructor(props) {
         super(props);
@@ -23,7 +22,7 @@ export default class EditForm extends React.Component {
             event_date: this.event_dateRef.current.value,
             description: this.descriptionRef.current.value
         };
-        fetch("/events/" + this.props.id, {
+        fetch("/api/events/" + this.props.id, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -36,7 +35,8 @@ export default class EditForm extends React.Component {
                 this.event_dateRef.current.value = "";
                 this.descriptionRef.current.value = "";
                 this.setState({ message: true });
-                this.props.history.push("/events")})
+                this.props.history || [].push("/api/events");
+            })
             .catch(error => console.error(error));
     };
 

@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.14
 -- Dumped by pg_dump version 9.5.14
 
--- Started on 2018-11-10 14:58:54 GMT
+-- Started on 2018-11-13 19:58:39 GMT
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,7 +18,7 @@ SET row_security = off;
 
 DROP DATABASE events_calendar;
 --
--- TOC entry 2174 (class 1262 OID 16384)
+-- TOC entry 2173 (class 1262 OID 24944)
 -- Name: events_calendar; Type: DATABASE; Schema: -; Owner: -
 --
 
@@ -45,7 +45,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2176 (class 0 OID 0)
+-- TOC entry 2175 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
@@ -56,7 +56,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET default_with_oids = false;
 
 --
--- TOC entry 182 (class 1259 OID 16632)
+-- TOC entry 181 (class 1259 OID 24945)
 -- Name: events_tbl; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -69,7 +69,7 @@ CREATE TABLE public.events_tbl (
 
 
 --
--- TOC entry 183 (class 1259 OID 16638)
+-- TOC entry 182 (class 1259 OID 24951)
 -- Name: events_tbl_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -82,8 +82,8 @@ CREATE SEQUENCE public.events_tbl_id_seq
 
 
 --
--- TOC entry 2177 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 2176 (class 0 OID 0)
+-- Dependencies: 182
 -- Name: events_tbl_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -91,7 +91,7 @@ ALTER SEQUENCE public.events_tbl_id_seq OWNED BY public.events_tbl.event_id;
 
 
 --
--- TOC entry 184 (class 1259 OID 16640)
+-- TOC entry 183 (class 1259 OID 24953)
 -- Name: floaters_events_tbl; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -103,7 +103,7 @@ CREATE TABLE public.floaters_events_tbl (
 
 
 --
--- TOC entry 185 (class 1259 OID 16643)
+-- TOC entry 184 (class 1259 OID 24956)
 -- Name: floaters_events_tbl_floaters_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -116,8 +116,8 @@ CREATE SEQUENCE public.floaters_events_tbl_floaters_events_id_seq
 
 
 --
--- TOC entry 2178 (class 0 OID 0)
--- Dependencies: 185
+-- TOC entry 2177 (class 0 OID 0)
+-- Dependencies: 184
 -- Name: floaters_events_tbl_floaters_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -125,7 +125,7 @@ ALTER SEQUENCE public.floaters_events_tbl_floaters_events_id_seq OWNED BY public
 
 
 --
--- TOC entry 186 (class 1259 OID 16675)
+-- TOC entry 185 (class 1259 OID 24958)
 -- Name: floaters_tbl; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -138,7 +138,7 @@ CREATE TABLE public.floaters_tbl (
 
 
 --
--- TOC entry 187 (class 1259 OID 16681)
+-- TOC entry 186 (class 1259 OID 24964)
 -- Name: floaters_floaters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -151,8 +151,8 @@ CREATE SEQUENCE public.floaters_floaters_id_seq
 
 
 --
--- TOC entry 2179 (class 0 OID 0)
--- Dependencies: 187
+-- TOC entry 2178 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: floaters_floaters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
@@ -160,7 +160,7 @@ ALTER SEQUENCE public.floaters_floaters_id_seq OWNED BY public.floaters_tbl.floa
 
 
 --
--- TOC entry 181 (class 1259 OID 16546)
+-- TOC entry 187 (class 1259 OID 24966)
 -- Name: floaters_tbl_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -173,7 +173,7 @@ CREATE SEQUENCE public.floaters_tbl_seq
 
 
 --
--- TOC entry 2034 (class 2604 OID 16718)
+-- TOC entry 2033 (class 2604 OID 24968)
 -- Name: event_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -181,7 +181,7 @@ ALTER TABLE ONLY public.events_tbl ALTER COLUMN event_id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 2035 (class 2604 OID 16719)
+-- TOC entry 2034 (class 2604 OID 24969)
 -- Name: floaters_events_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -189,7 +189,7 @@ ALTER TABLE ONLY public.floaters_events_tbl ALTER COLUMN floaters_events_id SET 
 
 
 --
--- TOC entry 2036 (class 2604 OID 16720)
+-- TOC entry 2035 (class 2604 OID 24970)
 -- Name: floater_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -197,8 +197,8 @@ ALTER TABLE ONLY public.floaters_tbl ALTER COLUMN floater_id SET DEFAULT nextval
 
 
 --
--- TOC entry 2163 (class 0 OID 16632)
--- Dependencies: 182
+-- TOC entry 2161 (class 0 OID 24945)
+-- Dependencies: 181
 -- Data for Name: events_tbl; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -322,8 +322,8 @@ Fork, clone and follow the instructions on the Dom-AJAX workshop repo');
 
 
 --
--- TOC entry 2180 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 2179 (class 0 OID 0)
+-- Dependencies: 182
 -- Name: events_tbl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -331,34 +331,42 @@ SELECT pg_catalog.setval('public.events_tbl_id_seq', 10, true);
 
 
 --
--- TOC entry 2165 (class 0 OID 16640)
--- Dependencies: 184
+-- TOC entry 2163 (class 0 OID 24953)
+-- Dependencies: 183
 -- Data for Name: floaters_events_tbl; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (2, 1, 1);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (4, 1, 2);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (6, 3, 1);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (7, 4, 3);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (8, 3, 5);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (9, 4, 5);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (10, 5, 5);
+INSERT INTO public.floaters_events_tbl (floaters_events_id, event_id, floater_id) VALUES (11, 6, 6);
+
+
+--
+-- TOC entry 2180 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: floaters_events_tbl_floaters_events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.floaters_events_tbl_floaters_events_id_seq', 11, true);
 
 
 --
 -- TOC entry 2181 (class 0 OID 0)
--- Dependencies: 185
--- Name: floaters_events_tbl_floaters_events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.floaters_events_tbl_floaters_events_id_seq', 1, true);
-
-
---
--- TOC entry 2182 (class 0 OID 0)
--- Dependencies: 187
+-- Dependencies: 186
 -- Name: floaters_floaters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.floaters_floaters_id_seq', 1, true);
+SELECT pg_catalog.setval('public.floaters_floaters_id_seq', 2, true);
 
 
 --
--- TOC entry 2167 (class 0 OID 16675)
--- Dependencies: 186
+-- TOC entry 2165 (class 0 OID 24958)
+-- Dependencies: 185
 -- Data for Name: floaters_tbl; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -378,11 +386,13 @@ INSERT INTO public.floaters_tbl (floater_id, floater_fname, floater_surname, flo
 INSERT INTO public.floaters_tbl (floater_id, floater_fname, floater_surname, floater_email) VALUES (16, 'Steve                                                                                                                                                                                                                                                          ', 'Bbbbb                                                                                                                                                                                                                                                          ', 'stevebalhawan@gmail.com');
 INSERT INTO public.floaters_tbl (floater_id, floater_fname, floater_surname, floater_email) VALUES (17, 'Steve                                                                                                                                                                                                                                                          ', 'Bbbbb                                                                                                                                                                                                                                                          ', 'stevebalhawan@gmail.com');
 INSERT INTO public.floaters_tbl (floater_id, floater_fname, floater_surname, floater_email) VALUES (18, 'Steve                                                                                                                                                                                                                                                          ', 'Bbbbb                                                                                                                                                                                                                                                          ', 'stevebalhawan@gmail.com');
+INSERT INTO public.floaters_tbl (floater_id, floater_fname, floater_surname, floater_email) VALUES (2, 'Steve                                                                                                                                                                                                                                                          ', 'Balhawan                                                                                                                                                                                                                                                       ', 'stevebalhawan@gmail.com');
+INSERT INTO public.floaters_tbl (floater_id, floater_fname, floater_surname, floater_email) VALUES (1, 'Daleel                                                                                                                                                                                                                                                         ', 'Haji                                                                                                                                                                                                                                                           ', 'daleel@gmail.com');
 
 
 --
--- TOC entry 2183 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2182 (class 0 OID 0)
+-- Dependencies: 187
 -- Name: floaters_tbl_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -390,7 +400,7 @@ SELECT pg_catalog.setval('public.floaters_tbl_seq', 1, false);
 
 
 --
--- TOC entry 2038 (class 2606 OID 16657)
+-- TOC entry 2037 (class 2606 OID 24972)
 -- Name: events_tbl_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -399,7 +409,7 @@ ALTER TABLE ONLY public.events_tbl
 
 
 --
--- TOC entry 2045 (class 2606 OID 16687)
+-- TOC entry 2044 (class 2606 OID 24974)
 -- Name: floater_id_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -408,7 +418,7 @@ ALTER TABLE ONLY public.floaters_tbl
 
 
 --
--- TOC entry 2041 (class 2606 OID 16661)
+-- TOC entry 2040 (class 2606 OID 24976)
 -- Name: floaters_events_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -417,7 +427,7 @@ ALTER TABLE ONLY public.floaters_events_tbl
 
 
 --
--- TOC entry 2043 (class 2606 OID 16663)
+-- TOC entry 2042 (class 2606 OID 24978)
 -- Name: unique_event_floater; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -426,7 +436,7 @@ ALTER TABLE ONLY public.floaters_events_tbl
 
 
 --
--- TOC entry 2039 (class 1259 OID 16664)
+-- TOC entry 2038 (class 1259 OID 24979)
 -- Name: fki_event_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -434,7 +444,7 @@ CREATE INDEX fki_event_id ON public.floaters_events_tbl USING btree (event_id);
 
 
 --
--- TOC entry 2046 (class 2606 OID 16723)
+-- TOC entry 2045 (class 2606 OID 24980)
 -- Name: event_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -443,7 +453,7 @@ ALTER TABLE ONLY public.floaters_events_tbl
 
 
 --
--- TOC entry 2047 (class 2606 OID 16733)
+-- TOC entry 2046 (class 2606 OID 24985)
 -- Name: floater_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -451,7 +461,7 @@ ALTER TABLE ONLY public.floaters_events_tbl
     ADD CONSTRAINT floater_id FOREIGN KEY (floater_id) REFERENCES public.floaters_tbl(floater_id) ON DELETE CASCADE;
 
 
--- Completed on 2018-11-10 14:58:55 GMT
+-- Completed on 2018-11-13 19:58:39 GMT
 
 --
 -- PostgreSQL database dump complete

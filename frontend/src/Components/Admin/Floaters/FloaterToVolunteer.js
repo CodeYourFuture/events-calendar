@@ -6,7 +6,7 @@ export default class VolunteerForm extends React.Component {
     state = { allmentors: [], message: false, volunteers: [], message2: false };
 
     componentDidMount() {
-        fetch("/mentors")
+        fetch("/api/mentors")
             .then(res => res.json())
             .then(data => {
                 this.setState({
@@ -17,7 +17,7 @@ export default class VolunteerForm extends React.Component {
     }
 
     _fetchVolunteers() {
-        fetch("/events-floaters/event/" + this.props.event_id)
+        fetch("/api/events-floaters/event/" + this.props.event_id)
             .then(res => res.json())
             .then(data1 => {
                 this.setState({
@@ -27,7 +27,7 @@ export default class VolunteerForm extends React.Component {
     }
 
     _addFloaterToEvent = floater_id => {
-        fetch("/events-floaters", {
+        fetch("/api/events-floaters/", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -40,14 +40,20 @@ export default class VolunteerForm extends React.Component {
         })
             .then(() => {
                 this.setState({ message: true });
-                setTimeout(() => this.setState({ message: false }), 1000);
+                setTimeout(
+                    () =>
+                        this.setState({
+                            message: false
+                        }),
+                    1000
+                );
                 this._fetchVolunteers();
             })
             .catch(error => console.error(error));
     };
 
     _removeFloaterFromEvent = floater_id => {
-        fetch("/events-floaters/" + floater_id, {
+        fetch("/api/events-floaters/" + floater_id, {
             method: "DELETE",
             headers: {
                 Accept: "application/json",
@@ -56,7 +62,13 @@ export default class VolunteerForm extends React.Component {
         })
             .then(() => {
                 this.setState({ message2: true });
-                setTimeout(() => this.setState({ message2: false }), 1000);
+                setTimeout(
+                    () =>
+                        this.setState({
+                            message2: false
+                        }),
+                    1000
+                );
                 this._fetchVolunteers();
             })
             .catch(error => console.error(error));

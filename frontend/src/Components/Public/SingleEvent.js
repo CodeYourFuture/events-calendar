@@ -8,7 +8,7 @@ export default class SingleEvent extends React.Component {
         event: []
     };
     componentDidMount() {
-        fetch(`/events/${this.props.match.params.id}`)
+        fetch(`/api/events/${this.props.match.params.id}`)
             .then(res => res.json())
             .then(data => {
                 this.setState({ event: data });
@@ -16,17 +16,23 @@ export default class SingleEvent extends React.Component {
     }
 
     render() {
-        return <div className="events mt-2">
+        return (
+            <div className="events mt-2">
                 <NavBar>
                     <h1 className="myHeader ml-5"> Events</h1>
                 </NavBar>
                 <div className="event">
-                    <Event name={this.state.event.lesson} description={this.state.event.description} date={this.state.event.date} />
+                    <Event
+                        name={this.state.event.lesson}
+                        description={this.state.event.description}
+                        date={this.state.event.date}
+                    />
                     <FloatersOfEvents id={this.props.match.params.id} />
                     <a className="btn btn-primary " href="/events">
                         Back
                     </a>
                 </div>
-            </div>;
+            </div>
+        );
     }
 }

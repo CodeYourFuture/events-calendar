@@ -22,7 +22,8 @@ export default class EditFloater extends React.Component {
             floater_surname: this.floater_surnameRef.current.value,
             floater_email: this.floater_emailRef.current.value
         };
-        fetch("/mentors/" + this.props.floater_id, {
+     
+        fetch("/api/mentors/" + this.props.floater_id, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -35,7 +36,8 @@ export default class EditFloater extends React.Component {
                 this.floater_surnameRef.current.value = "";
                 this.floater_emailRef.current.value = "";
                 this.setState({ message: true });
-                this.props.history.push("/mentors");
+                this.props.history.push("/api/mentors");
+                console.log(this.props);
             })
             .catch(error => console.error(error));
     };

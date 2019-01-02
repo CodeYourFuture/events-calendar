@@ -17,7 +17,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-        fetch("/events")
+        fetch("/api/events")
             .then(res => res.json())
             .then(data => {
                 this.setState({ events: data });
@@ -25,7 +25,7 @@ class App extends Component {
     }
 
     toDelete(id) {
-        fetch("/events/" + id, {
+        fetch("/api/events/" + id, {
             method: "delete"
         }).then(response => {
             if (response.status === 500) {
