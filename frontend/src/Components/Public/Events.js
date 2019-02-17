@@ -19,9 +19,10 @@ const Events = props => {
                     <div className="event" key={i}>
                         <Event
                             key={i}
-                            name={event.lesson}
+                            name={event.name}
                             description={event.description}
                             date={event.date}
+                            time={event.time}
                         />
                         <FloatersOfEvents id={event.event_id} />
 

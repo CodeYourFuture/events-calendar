@@ -73,6 +73,11 @@ class App extends Component {
                             path="/admin/floaters"
                             render={() => <Floaters />}
                         />
+                        <Route
+                            exact
+                            path="/admin/newevent"
+                            component={Form}
+                        />
                     </div>
                 </BrowserRouter>
             </div>
