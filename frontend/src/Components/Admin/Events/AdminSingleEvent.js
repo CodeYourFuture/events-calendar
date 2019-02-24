@@ -60,11 +60,11 @@ export default class SingleEvent extends React.Component {
                     <div className="grid-item">
                         <h4 className="mt-2">
                             {moment(this.state.event.date).format(
-                                "Do MMMM  YYYY"
+                                "Do MMMM YYYY"
                             )}
                         </h4>
                         <small>
-                            <p>{this.state.event.date}</p>
+                            <p>{this.state.event.time}</p>
                         </small>
                     </div>
                     <div className="grid-item">
