@@ -30,7 +30,7 @@ export default class Form extends React.Component {
             syllabusUrl: this.syllabusUrlRef.current.value,
             address: this.addressRef.current.value
         };
-        fetch("/events", {
+        fetch("/events/api", {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -39,10 +39,7 @@ export default class Form extends React.Component {
             body: JSON.stringify(body)
         })
             .then(response => {
-                this.lessonRef.current.value = "";
-                // this.event_dateRef.current.value = "";
-                this.descriptionRef.current.value = "";
-                this.setState({ message: true });
+                this.props.history.push("/admin/events");
             })
             .catch(error => console.error(error));
     };
