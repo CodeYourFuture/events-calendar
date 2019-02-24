@@ -3,13 +3,13 @@ import React from "react";
 export default class FloatersOfEvents extends React.Component {
     state = { mentors: [] };
 
-    componentDidMount() {
-        fetch("/events-floaters/event/" + this.props.id)
-            .then(res => res.json())
-            .then(data => {
-                this.setState({ mentors: data });
-            });
-    }
+    // componentDidMount() {
+    //     fetch("/events-floaters/event/" + this.props.id)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             this.setState({ mentors: data });
+    //         });
+    // }
 
     render() {
         return (

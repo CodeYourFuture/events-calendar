@@ -10,18 +10,19 @@ export default class SingleEvent extends React.Component {
     state = {
         event: []
     };
-
     componentDidMount() {
-        fetch(`/events/${this.props.match.params.id}`)
+        fetch(`/events/api/${this.props.match.params.id}`)
             .then(res => res.json())
             .then(data => {
-                this.setState({ event: data });
+                if (!data.event.syllabusUrl.includes("http"))
+                    data.event.syllabusUrl = "http://" + data.event.syllabusUrl;
+                this.setState({ event: data.event });
             });
     }
 
     toDelete(id) {
         console.log("id" + id);
-        fetch("/api/events/" + id, {
+        fetch("/events/api/" + id, {
             method: "delete"
         }).then(response => {
             if (response.status === 500) {
@@ -59,32 +60,29 @@ export default class SingleEvent extends React.Component {
                     <div className="grid-item">
                         <h4 className="mt-2">
                             {moment(this.state.event.date).format(
-                                "Do MMMM  YYYY"
+                                "Do MMMM YYYY"
                             )}
                         </h4>
                         <small>
-                            <p>12pm-6pm</p>
+                            <p>{this.state.event.time}</p>
                         </small>
                     </div>
                     <div className="grid-item">
                         <h1 className="font-weight-bold">
-                            {this.state.event.lesson}
+                            {this.state.event.name}
                         </h1>
                     </div>
                     <div className="grid-item ">
                         <p className="mt-2">
-                            <strong>{5}</strong> more volunteers needed
+                            <strong>
+                                {this.state.event.numVolunteersNeeded}
+                            </strong>{" "}
+                            more volunteers needed
                         </p>
                     </div>
                     <div className="grid-item ">
                         <p className="a-address ">
-                            <a href="">
-                                London
-                                <br />
-                                ticket Master
-                                <br />
-                                55 Road Road
-                            </a>
+                            <a href="">{this.state.event.address}</a>
                         </p>
                     </div>
 
@@ -92,7 +90,13 @@ export default class SingleEvent extends React.Component {
                         <p>
                             {this.state.event.description}
                             <br />
-                            <a href="">For Syllabus Click here</a>
+
+                            <a
+                                href={this.state.event.syllabusUrl}
+                                target="_blank"
+                            >
+                                For Syllabus Click here
+                            </a>
                         </p>
                     </div>
                     <div className="grid-item">
@@ -126,7 +130,7 @@ export default class SingleEvent extends React.Component {
                             >
                                 <EditForm
                                     name={this.state.event.name}
-                                    lesson={this.state.event.lesson}
+                                    lesson={this.state.event.name}
                                     event_date={this.state.event.date}
                                     description={this.state.event.description}
                                     id={this.state.event.event_id}

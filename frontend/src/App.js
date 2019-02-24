@@ -18,16 +18,15 @@ class App extends Component {
     };
 
     componentDidMount() {
-        fetch("/api/events")
+        fetch("/events/api/")
             .then(res => res.json())
             .then(data => {
-                this.setState({ events: data });
-                
+                this.setState({ events: data.events });
             });
     }
 
     toDelete(id) {
-        fetch("api/events/" + id, {
+        fetch("/events/api/" + id, {
             method: "delete"
         }).then(response => {
             if (response.status === 500) {
@@ -78,6 +77,7 @@ class App extends Component {
                             path="/admin/floaters"
                             render={() => <Floaters />}
                         />
+                        <Route exact path="/admin/newevent" component={Form} />
                     </div>
                 </BrowserRouter>
             </div>

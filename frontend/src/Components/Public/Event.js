@@ -13,13 +13,15 @@ const Event = props => {
                 </h4>
             </div>
             <div className="grid-item">
-                <h1 className="font-weight-bold">{props.lesson}</h1>
-                <div className=" ">UK, London</div>
+                <h1 className="font-weight-bold">{props.name}</h1>
+                <div className=" ">
+                    {props.country}, {props.city}
+                </div>
                 <small>
                     <a
                         className=" btn-link "
-                        href={`/event/${props.event_id}`}
-                        alt={props.lesson}
+                        href={`/event/${props._id}`}
+                        alt={props.name}
                     >
                         class details and address
                     </a>
@@ -44,7 +46,8 @@ const Event = props => {
 
             <div className="grid-item ">
                 <p className="mt-2">
-                    <strong>{5}</strong> more volunteers needed
+                    <strong>{props.numVolunteersNeeded}</strong> more volunteers
+                    needed
                 </p>
             </div>
         </span>

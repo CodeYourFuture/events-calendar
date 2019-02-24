@@ -8,10 +8,12 @@ export default class SingleEvent extends React.Component {
         event: []
     };
     componentDidMount() {
-        fetch(`/events/${this.props.match.params.id}`)
+        fetch(`/events/api/${this.props.match.params.id}`)
             .then(res => res.json())
             .then(data => {
-                this.setState({ event: data });
+                if (!data.event.syllabusUrl.includes("http"))
+                    data.event.syllabusUrl = "http://" + data.event.syllabusUrl;
+                this.setState({ event: data.event });
             });
     }
 
@@ -40,23 +42,20 @@ export default class SingleEvent extends React.Component {
                     </div>
                     <div className="grid-item">
                         <h1 className="font-weight-bold">
-                            {this.state.event.lesson}
+                            {this.state.event.name}
                         </h1>
                     </div>
                     <div className="grid-item ">
                         <p className="mt-2">
-                            <strong>{5}</strong> more volunteers needed
+                            <strong>
+                                {this.state.event.numVolunteersNeeded}
+                            </strong>{" "}
+                            more volunteers needed
                         </p>
                     </div>
                     <div className="grid-item ">
                         <p className="a-address ">
-                            <a href="">
-                                London
-                                <br />
-                                ticket Master
-                                <br />
-                                55 Road Road
-                            </a>
+                            <a href="">{this.state.event.address}</a>
                         </p>
                     </div>
 
@@ -64,7 +63,12 @@ export default class SingleEvent extends React.Component {
                         <p>
                             {this.state.event.description}
                             <br />
-                            <a href="">For Syllabus Click here</a>
+                            <a
+                                href={this.state.event.syllabusUrl}
+                                target="_blank"
+                            >
+                                For Syllabus Click here
+                            </a>
                         </p>
 
                         <div className="text-center">

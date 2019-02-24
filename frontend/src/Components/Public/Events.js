@@ -5,6 +5,7 @@ import NavBar from "../NavBar";
 import "../../Style/Events.css";
 
 const Events = props => {
+
     return (
         <div className="events">
             <NavBar>
@@ -14,10 +15,15 @@ const Events = props => {
                 return (
                     <Event
                         key={i}
-                        event_id={event.event_id}
-                        lesson={event.lesson}
+                        _id={event._id}
+                        name={event.name}
                         event={event}
                         date={event.date}
+                        address={event.address}
+                        country={event.country}
+                        city={event.city}
+                        syllabusUrl={event.syllabusUrl}
+                        numVolunteersNeeded={event.numVolunteersNeeded}
                     />
                 );
             })}
