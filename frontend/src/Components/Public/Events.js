@@ -5,7 +5,6 @@ import NavBar from "../NavBar";
 import "../../Style/Events.css";
 
 const Events = props => {
-    console.log(props.events);
 
     return (
         <div className="events">
