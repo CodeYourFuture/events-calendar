@@ -33,6 +33,12 @@ const Adminevents = props => {
                             description={event.description}
                             date={event.date}
                             event_id={event.event_id}
+                            address={event.address}
+                            country={event.country}
+                            city={event.city}
+                            syllabusUrl={event.syllabusUrl}
+                            volunteers={event.volunteers}
+                            numVolunteersNeeded={event.numVolunteersNeeded}
                         />
                         <FloatersOfEvents id={event.event_id} />
                         <Popup

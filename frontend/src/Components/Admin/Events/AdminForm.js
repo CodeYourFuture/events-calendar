@@ -14,6 +14,7 @@ export default class Form extends React.Component {
         this.countryRef = React.createRef();
         this.cityRef = React.createRef();
         this.syllabusUrlRef = React.createRef();
+        this.addressRef = React.createRef();
     }
 
     onSubmit = event => {
@@ -26,7 +27,8 @@ export default class Form extends React.Component {
             numVolunteersNeeded: this.numVolunteersNeededRef.current.value,
             country: this.countryRef.current.value,
             city: this.cityRef.current.value,
-            syllabusUrl: this.syllabusUrlRef.current.value
+            syllabusUrl: this.syllabusUrlRef.current.value,
+            address: this.addressRef.current.value
         };
         fetch("/events", {
             headers: {
@@ -157,6 +159,21 @@ export default class Form extends React.Component {
                                         ref={this.syllabusUrlRef}
                                     />
                                     <br />
+
+                                    <label
+                                        className="font-weight-bold"
+                                        htmlFor="event Address"
+                                    >
+                                        Events Address
+                                    </label>
+                                    <textarea
+                                        className="textarea form-control form-control-lg"
+                                        placeholder="Adress"
+                                        ref={this.addressRef}
+                                        rows="4"
+                                    />
+                                    <br />
+
                                     <div
                                         className="btn-toolbar justify-content-between"
                                         role="toolbar"
