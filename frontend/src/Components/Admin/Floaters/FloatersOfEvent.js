@@ -14,19 +14,16 @@ export default class FloatersOfEvents extends React.Component {
     render() {
         return (
             <div>
-                <table>
-                    <tbody className="table table-borderless">
-                        <td> Floaters: </td>
-                        {this.state.mentors.map(floater => {
-                            return (
-                                <td key={floater.floaters_events_id}>
-                                    {floater.floater_fname}
-                                    {floater.floater_surname}
-                                </td>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                <p>
+                    <strong>Volunteered:</strong>
+                </p>
+                {this.state.mentors.map(floater => {
+                    return (
+                        <p key={floater.floaters_events_id}>
+                            {floater.floater_fname} {floater.floater_surname}
+                        </p>
+                    );
+                })}
             </div>
         );
     }

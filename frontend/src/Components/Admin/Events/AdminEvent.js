@@ -1,10 +1,10 @@
 import React from "react";
 import moment from "moment";
-import "../../Style/Event.css";
-import "../../Style/Events.css";
+import "../../../Style/Event.css";
+import "../../../Style/Events.css";
 import Popup from "reactjs-popup";
 
-const Event = props => {
+const AdminEvent = props => {
     return (
         <span className="event-grid-container">
             <div className="grid-item">
@@ -20,10 +20,10 @@ const Event = props => {
                 <small>
                     <a
                         className=" btn-link "
-                        href={`/event/${props._id}`}
+                        href={`/admin/event/${props._id}`}
                         alt={props.name}
                     >
-                        class details and address
+                        See or Edit This Event
                     </a>
                 </small>
                 <div className=" ">
@@ -33,7 +33,7 @@ const Event = props => {
                                 type="button"
                                 className="btn btn-primary mt-4"
                             >
-                                Volunteer
+                                Add Volunteers
                             </button>
                         }
                         position="right center"
@@ -50,8 +50,11 @@ const Event = props => {
                     needed
                 </p>
             </div>
+            <div className="grid-item "> </div>
+            <div className="grid-item " />
+            <div className="grid-item " />
         </span>
     );
 };
 
-export default Event;
+export default AdminEvent;

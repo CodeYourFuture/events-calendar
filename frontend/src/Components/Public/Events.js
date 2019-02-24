@@ -1,10 +1,8 @@
 import React from "react";
 import Event from "./Event.js";
 import "../../Style/Event.css";
-import FloatersOfEvents from "../Admin/Floaters/FloatersOfEvent.js";
-import Popup from "reactjs-popup";
-import VolunteerForm from "../Admin/Floaters/FloaterToVolunteer";
 import NavBar from "../NavBar";
+import "../../Style/Events.css";
 
 const Events = props => {
     console.log(props.events);
@@ -16,39 +14,18 @@ const Events = props => {
             </NavBar>
             {props.events.map(function(event, i) {
                 return (
-                    <div className="event" key={i}>
-                        <Event
-                            key={i}
-                            name={event.name}
-                            description={event.description}
-                            date={event.date}
-                            time={event.time}
-                        />
-                        <FloatersOfEvents id={event.event_id} />
-
-                        <Popup
-                            trigger={
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-primary mr-4 mb-2 mt-4"
-                                >
-                                    volunteer
-                                </button>
-                            }
-                            position="right center"
-                            modal
-                        >
-                            <VolunteerForm event_id={event.event_id} />
-                        </Popup>
-
-                        <a
-                            className="btn btn-link mr-4 mb-2 mt-4"
-                            href={`/event/${event.event_id}`}
-                            alt={event.lesson}
-                        >
-                            Read more
-                        </a>
-                    </div>
+                    <Event
+                        key={i}
+                        _id={event._id}
+                        name={event.name}
+                        event={event}
+                        date={event.date}
+                        address={event.address}
+                        country={event.country}
+                        city={event.city}
+                        syllabusUrl={event.syllabusUrl}
+                        numVolunteersNeeded={event.numVolunteersNeeded}
+                    />
                 );
             })}
         </div>

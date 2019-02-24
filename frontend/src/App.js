@@ -9,6 +9,7 @@ import FloaterForm from "./Components/Admin/Floaters/FloaterForm";
 import mainPage from "./Components/Public/MainPage";
 import Floaters from "./Components/Admin/Floaters/Floaters.js";
 import SingleEvent from "./Components/Public/SingleEvent";
+import AdminSingleEvent from "./Components/Admin/Events/AdminSingleEvent";
 import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
 
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-        fetch("/events")
+        fetch("/events/api/")
             .then(res => res.json())
             .then(data => {
                 this.setState({ events: data.events });
@@ -25,7 +26,7 @@ class App extends Component {
     }
 
     toDelete(id) {
-        fetch("/events/" + id, {
+        fetch("/events/api/" + id, {
             method: "delete"
         }).then(response => {
             if (response.status === 500) {
@@ -42,12 +43,15 @@ class App extends Component {
                 <BrowserRouter>
                     <div>
                         <Route
-                            exact
                             path="/events"
                             render={() => <Events events={this.state.events} />}
                         />
                         <Route exact path="/" component={mainPage} />
                         <Route path="/event/:id" component={SingleEvent} />
+                        <Route
+                            path="/admin/event/:id"
+                            component={AdminSingleEvent}
+                        />
                         <Route exact path="/admin" component={Admin} />
                         <Route path="/admin/events/add" component={Form} />
                         <Route
@@ -73,11 +77,7 @@ class App extends Component {
                             path="/admin/floaters"
                             render={() => <Floaters />}
                         />
-                        <Route
-                            exact
-                            path="/admin/newevent"
-                            component={Form}
-                        />
+                        <Route exact path="/admin/newevent" component={Form} />
                     </div>
                 </BrowserRouter>
             </div>
