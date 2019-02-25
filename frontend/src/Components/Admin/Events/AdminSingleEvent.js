@@ -49,6 +49,7 @@ export default class SingleEvent extends React.Component {
                     >
                         <Form />
                     </Popup>
+
                     <a href="/admin/events">
                         <button className="btn btn-outline-primary ml-2 mb-2 sideButton">
                             Back to All Events
@@ -116,26 +117,14 @@ export default class SingleEvent extends React.Component {
                     <div className="grid-item">
                         {" "}
                         <div className="grid-item">
-                            <Popup
-                                trigger={
-                                    <button
-                                        type="button"
-                                        className="btn btn btn-warning mr-4 mb-2 mt-4"
-                                    >
-                                        Edit
-                                    </button>
-                                }
-                                position="right center"
-                                modal
-                            >
-                                <EditForm
-                                    name={this.state.event.name}
-                                    lesson={this.state.event.name}
-                                    event_date={this.state.event.date}
-                                    description={this.state.event.description}
-                                    id={this.state.event.event_id}
-                                />
-                            </Popup>
+                            <a href="/admin/editevent">
+                                <button
+                                    type="button"
+                                    className="btn btn btn-warning mr-4 mb-2 mt-4"
+                                >
+                                    Edit
+                                </button>
+                            </a>
                         </div>
                     </div>
                     <div className="grid-item ">

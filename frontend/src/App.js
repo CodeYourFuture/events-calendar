@@ -11,6 +11,7 @@ import Floaters from "./Components/Admin/Floaters/Floaters.js";
 import SingleEvent from "./Components/Public/SingleEvent";
 import AdminSingleEvent from "./Components/Admin/Events/AdminSingleEvent";
 import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
+import EditEvent from "./Components/Admin/Events/EditEvent";
 
 class App extends Component {
     state = {
@@ -78,6 +79,11 @@ class App extends Component {
                             render={() => <Floaters />}
                         />
                         <Route exact path="/admin/newevent" component={Form} />
+                        <Route
+                            exact
+                            path="/admin/editevent"
+                            component={EditEvent}
+                        />
                     </div>
                 </BrowserRouter>
             </div>
