@@ -1,6 +1,6 @@
 import React from "react";
-import Popup from "reactjs-popup";
-import Form from "./AdminForm";
+// import Popup from "reactjs-popup";
+// import Form from "./AdminForm";
 import "../../../Style/Event.css";
 import NavBar from "../../NavBar";
 import AdminEvent from "./AdminEvent.js";

@@ -3,9 +3,6 @@ import Message from "../../Message/Message";
 
 export default class EditEvent extends React.Component {
     state = {
-        lesson: "",
-        event_date: "",
-        description: "",
         message: false
     };
     constructor(props) {
@@ -13,14 +10,26 @@ export default class EditEvent extends React.Component {
         this.lessonRef = React.createRef();
         this.event_dateRef = React.createRef();
         this.descriptionRef = React.createRef();
+        this.timeRef = React.createRef();
+        this.numVolunteersNeededRef = React.createRef();
+        this.countryRef = React.createRef();
+        this.cityRef = React.createRef();
+        this.syllabusUrlRef = React.createRef();
+        this.addressRef = React.createRef();
     }
 
     onSubmit = event => {
         event.preventDefault();
         const body = {
-            lesson: this.lessonRef.current.value,
-            event_date: this.event_dateRef.current.value,
-            description: this.descriptionRef.current.value
+            name: this.lessonRef.current.value,
+            date: this.event_dateRef.current.value,
+            description: this.descriptionRef.current.value,
+            time: this.timeRef.current.value,
+            numVolunteersNeeded: this.numVolunteersNeededRef.current.value,
+            country: this.countryRef.current.value,
+            city: this.cityRef.current.value,
+            syllabusUrl: this.syllabusUrlRef.current.value,
+            address: this.addressRef.current.value
         };
         fetch("/events/" + this.props._id, {
             headers: {
