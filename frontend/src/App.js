@@ -12,31 +12,52 @@ import SingleEvent from "./Components/Public/SingleEvent";
 import AdminSingleEvent from "./Components/Admin/Events/AdminSingleEvent";
 import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
 import EditEvent from "./Components/Admin/Events/EditEvent";
+import moment from "moment";
+moment.locale("en");
 
 class App extends Component {
     state = {
         events: []
     };
 
+    // componentDidMount() {
+    //     fetch("/events/api/")
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             this.setState({ events: data.events });
+    //         });
+    // }
+
     componentDidMount() {
-        fetch("/events/api/")
+        this.fetchEvents();
+    }
+    fetchEvents = () => {
+        return fetch("/events/api/")
             .then(res => res.json())
             .then(data => {
-                this.setState({ events: data.events });
-            });
-    }
+                let sortedEvents = data.events;
+                sortedEvents.sort((a, b) => {
+                    return moment(b.date).diff(moment(a.date));
+                });
+                this.setState({ events: sortedEvents });
+                //    console.log(data);
 
-    toDelete(id) {
-        fetch("/events/api/" + id, {
-            method: "delete"
-        }).then(response => {
-            if (response.status === 500) {
-                alert("Error: Failed to delete event");
-            } else {
-                window.location.reload();
-            }
-        });
-    }
+                // data.sort((a, b) => moment(a.date) - moment(b.date));
+                //    console.log(data);
+            });
+    };
+
+    // toDelete(id) {
+    //     fetch("/events/api/" + id, {
+    //         method: "delete"
+    //     }).then(response => {
+    //         if (response.status === 500) {
+    //             alert("Error: Failed to delete event");
+    //         } else {
+    //             window.location.reload();
+    //         }
+    //     });
+    // }
 
     render() {
         return (
@@ -51,8 +72,14 @@ class App extends Component {
                         <Route path="/event/:id" component={SingleEvent} />
                         <Route
                             path="/admin/event/:id"
-                            component={AdminSingleEvent}
+                            render={props => (
+                                <AdminSingleEvent
+                                    id={props.match.params.id}
+                                    fetchEvents={this.fetchEvents}
+                                />
+                            )}
                         />
+
                         <Route exact path="/admin" component={Admin} />
                         <Route path="/admin/events/add" component={Form} />
                         <Route
@@ -69,7 +96,8 @@ class App extends Component {
                             render={() => (
                                 <AdminEvents
                                     events={this.state.events}
-                                    deleteEvent={this.toDelete}
+                                    // deleteEvent={this.toDelete}
+                                    fetchEvents={this.fetchEvents}
                                 />
                             )}
                         />
@@ -81,9 +109,13 @@ class App extends Component {
                         <Route exact path="/admin/newevent" component={Form} />
                         <Route
                             exact
-                            path="/admin/editevent"
+                            path="/admin/editevent/:id"
                             component={EditEvent}
                         />
+                        {/* <Route
+                            path="/admin/event/:id"
+                            component={AdminSingleEvent}
+                        /> */}
                     </div>
                 </BrowserRouter>
             </div>

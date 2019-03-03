@@ -3,19 +3,19 @@ import NavBar from "../../NavBar";
 import moment from "moment";
 import Popup from "reactjs-popup";
 import FloatersOfEvents from "../Floaters/FloatersOfEvent.js";
-import EditForm from "./EditEvent.js";
-import Form from "./AdminForm";
+// import EditForm from "./EditEvent.js";
+// import Form from "./AdminForm";
 
 export default class SingleEvent extends React.Component {
     state = {
         event: []
     };
     componentDidMount() {
-        fetch(`/events/api/${this.props.match.params.id}`)
+        fetch(`/events/api/${this.props.id}`)
             .then(res => res.json())
             .then(data => {
-                if (!data.event.syllabusUrl.includes("http"))
-                    data.event.syllabusUrl = "http://" + data.event.syllabusUrl;
+                //if (!data.event.syllabusUrl.includes("http"))
+                //    data.event.syllabusUrl = "http://" + data.event.syllabusUrl;
                 this.setState({ event: data.event });
             });
     }
@@ -25,7 +25,7 @@ export default class SingleEvent extends React.Component {
         fetch("/events/api/" + id, {
             method: "delete"
         }).then(response => {
-            if (response.status === 500) {
+            if (response.status === 500 || response.status === 404) {
                 alert("Error: Failed to delete event");
             } else {
                 this.props.history.push("/admin/events");
@@ -38,7 +38,7 @@ export default class SingleEvent extends React.Component {
             <div className="events mt-2">
                 <NavBar>
                     <h1 className="myHeader ml-5"> Events</h1>
-                    <Popup
+                    {/* <Popup
                         trigger={
                             <button className="btn btn-outline-primary mb-2 ml-2 sideButton mr-5 ">
                                 add a new event
@@ -47,8 +47,22 @@ export default class SingleEvent extends React.Component {
                         position="right center"
                         modal
                     >
-                        <Form />
-                    </Popup>
+                        <Form
+                            name={this.props.name}
+                            fetchEvents={this.props.fetchEvents}
+                        />
+                    </Popup> */}
+
+                    <a href="/admin/newevent">
+                        <button className="btn btn-outline-primary mb-2 ml-2 sideButton mr-5 ">
+                            add a new event
+                        </button>
+                    </a>
+                    <a href="/admin">
+                        <button className="btn btn-outline-primary ml-2 mb-2 sideButton">
+                            Back
+                        </button>
+                    </a>
 
                     <a href="/admin/events">
                         <button className="btn btn-outline-primary ml-2 mb-2 sideButton">
@@ -101,14 +115,14 @@ export default class SingleEvent extends React.Component {
                         </p>
                     </div>
                     <div className="grid-item">
-                        <FloatersOfEvents id={this.props.match.params.id} />
+                        <FloatersOfEvents id={this.props.id} />
                     </div>
                     <div className="grid-item">
                         {" "}
                         <button
                             className="btn btn-danger  mr-4 mb-2 mt-4"
                             onClick={() => {
-                                this.toDelete(this.state.event.event_id);
+                                this.toDelete(this.state.event._id);
                             }}
                         >
                             Delete
@@ -117,7 +131,13 @@ export default class SingleEvent extends React.Component {
                     <div className="grid-item">
                         {" "}
                         <div className="grid-item">
-                            <a href="/admin/editevent">
+                            {/* <a href="/admin/editevent"> */}
+                            {/* href={`/admin/event/${this.state.event.event_id}`} */}
+                            <a
+                                href={`/admin/editevent/${
+                                    this.state.event._id
+                                }`}
+                            >
                                 <button
                                     type="button"
                                     className="btn btn btn-warning mr-4 mb-2 mt-4"
