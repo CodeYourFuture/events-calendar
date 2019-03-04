@@ -1,8 +1,14 @@
 import React from "react";
 import Message from "../../Message/Message";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+moment.locale("en");
+
 export default class Form extends React.Component {
     state = {
-        message: false
+        message: false,
+        date: undefined,
+        eventDateError: ""
     };
     constructor(props) {
         super(props);
@@ -16,12 +22,39 @@ export default class Form extends React.Component {
         this.syllabusUrlRef = React.createRef();
         this.addressRef = React.createRef();
     }
+    handleDateChange = date => {
+        this.setState({
+            date: date,
+            eventDateError: ""
+        });
+        if (!date) {
+            this.setState({
+                eventDateError: "error"
+            });
+        }
+    };
+
+    // handleChangeRaw = date => {
+    //     //console.log(date)
+    //     date.currentTarget.value = moment(this.props.input.value).format(
+    //         "YYYY/MM/DD"
+    //     );
+    // };
+
+    // toggleError = () => {
+    //     this.setState(prevState => {
+    //         return {
+    //             hasError: !prevState.hasError
+    //         };
+    //         console.log("prevState:", this.state.hasError, prevState);
+    //     });
+    // };
 
     onSubmit = event => {
         event.preventDefault();
         const body = {
             name: this.lessonRef.current.value,
-            date: this.event_dateRef.current.value,
+            date: this.state.date,
             description: this.descriptionRef.current.value,
             time: this.timeRef.current.value,
             numVolunteersNeeded: this.numVolunteersNeededRef.current.value,
@@ -38,9 +71,11 @@ export default class Form extends React.Component {
             method: "POST",
             body: JSON.stringify(body)
         })
-            .then(response => {
-                this.props.history.push("/admin/events");
-            })
+            // .then(() => {
+            //     window.location = "/admin/events";
+            //     this.props.fetchEvents();
+            // })
+
             .catch(error => console.error(error));
     };
 
@@ -77,11 +112,33 @@ export default class Form extends React.Component {
                                     >
                                         Events Date
                                     </label>
-                                    <input
+                                    {/* <input
                                         className="input form-control form-control-lg"
                                         placeholder="Event date"
                                         ref={this.event_dateRef}
+                                        required
                                     />
+                                    <br /> */}
+                                    <DatePicker
+                                        ref={this.event_dateRef}
+                                        name="eventDate"
+                                        id="eventDate"
+                                        className={
+                                            this.state.eventDateError
+                                                ? "redBorder form-control form-control-lg"
+                                                : "input form-control form-control-lg"
+                                        }
+                                        selected={this.state.date}
+                                        onChange={this.handleDateChange.bind(
+                                            this
+                                        )}
+                                        onFocusChange={this.handleDateChange.bind(
+                                            this
+                                        )}
+                                        minDate={moment(new Date())}
+                                        isClearable={true}
+                                        placeholderText="Insert Date"
+                                    />{" "}
                                     <br />
                                     <label
                                         className="font-weight-bold"
@@ -156,7 +213,6 @@ export default class Form extends React.Component {
                                         ref={this.syllabusUrlRef}
                                     />
                                     <br />
-
                                     <label
                                         className="font-weight-bold"
                                         htmlFor="event Address"
@@ -170,7 +226,6 @@ export default class Form extends React.Component {
                                         rows="4"
                                     />
                                     <br />
-
                                     <div
                                         className="btn-toolbar justify-content-between"
                                         role="toolbar"
