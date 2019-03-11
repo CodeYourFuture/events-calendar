@@ -72,10 +72,10 @@ export default class Form extends React.Component {
             method: "POST",
             body: JSON.stringify(body)
         })
-            // .then(() => {
+             .then(() => {
             //     window.location = "/admin/events";
-            //     this.props.fetchEvents();
-            // })
+                 this.props.history.push("/admin/events")
+             })
 
             .catch(error => console.error(error));
     };

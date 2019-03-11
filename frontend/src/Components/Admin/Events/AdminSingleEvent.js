@@ -3,10 +3,11 @@ import NavBar from "../../NavBar";
 import moment from "moment";
 import Popup from "reactjs-popup";
 import FloatersOfEvents from "../Floaters/FloatersOfEvent.js";
+import { withRouter } from 'react-router'
 // import EditForm from "./EditEvent.js";
 // import Form from "./AdminForm";
 
-export default class SingleEvent extends React.Component {
+class SingleEvent extends React.Component {
     state = {
         event: []
     };
@@ -28,7 +29,7 @@ export default class SingleEvent extends React.Component {
             if (response.status === 500 || response.status === 404) {
                 alert("Error: Failed to delete event");
             } else {
-                this.props.history.push("/admin/events");
+                this.props.history.replace("/admin/events");
             }
         });
     }
@@ -168,3 +169,4 @@ export default class SingleEvent extends React.Component {
         );
     }
 }
+export default withRouter(SingleEvent);

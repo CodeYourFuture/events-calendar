@@ -110,7 +110,9 @@ class App extends Component {
                         <Route
                             exact
                             path="/admin/editevent/:id"
-                            component={EditEvent}
+                            render={(props) => <EditEvent
+                                _id={props.match.params.id}
+                            />}
                         />
                         {/* <Route
                             path="/admin/event/:id"

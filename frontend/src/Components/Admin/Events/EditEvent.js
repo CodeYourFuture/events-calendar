@@ -1,7 +1,8 @@
 import React from "react";
 import Message from "../../Message/Message";
+import { withRouter } from 'react-router'
 
-export default class EditEvent extends React.Component {
+class EditEvent extends React.Component {
     state = {
         message: false
     };
@@ -16,6 +17,7 @@ export default class EditEvent extends React.Component {
         this.cityRef = React.createRef();
         this.syllabusUrlRef = React.createRef();
         this.addressRef = React.createRef();
+
     }
 
     onSubmit = event => {
@@ -31,7 +33,7 @@ export default class EditEvent extends React.Component {
             syllabusUrl: this.syllabusUrlRef.current.value,
             address: this.addressRef.current.value
         };
-        fetch("/events/" + this.props._id, {
+        fetch("/events/api/" + this.props._id, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -40,11 +42,7 @@ export default class EditEvent extends React.Component {
             body: JSON.stringify(body)
         })
             .then(() => {
-                this.lessonRef.current.value = "";
-                this.event_dateRef.current.value = "";
-                this.descriptionRef.current.value = "";
-                this.setState({ message: true });
-                this.props.history.push("/events/api/" + this.props._id);
+                this.props.history.push("/admin/event/" + this.props._id);
             })
 
             .catch(error => console.error(error));
@@ -207,3 +205,4 @@ export default class EditEvent extends React.Component {
         );
     }
 }
+export default withRouter(EditEvent);
