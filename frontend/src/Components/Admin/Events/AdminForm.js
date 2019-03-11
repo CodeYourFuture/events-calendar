@@ -1,6 +1,7 @@
 import React from "react";
 import Message from "../../Message/Message";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment";
 moment.locale("en");
 
@@ -135,7 +136,7 @@ export default class Form extends React.Component {
                                         onFocusChange={this.handleDateChange.bind(
                                             this
                                         )}
-                                        minDate={moment(new Date())}
+                                        minDate={new Date()}
                                         isClearable={true}
                                         placeholderText="Insert Date"
                                     />{" "}
