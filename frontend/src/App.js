@@ -11,39 +11,24 @@ import Floaters from "./Components/Admin/Floaters/Floaters.js";
 import SingleEvent from "./Components/Public/SingleEvent";
 import AdminSingleEvent from "./Components/Admin/Events/AdminSingleEvent";
 import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
-import EditEvent from "./Components/Admin/Events/EditEvent";
 import moment from "moment";
 moment.locale("en");
 
 class App extends Component {
-    state = {
-        events: []
-    };
-
-    // componentDidMount() {
-    //     fetch("/events/api/")
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             this.setState({ events: data.events });
-    //         });
-    // }
 
     componentDidMount() {
-        this.fetchEvents();
     }
+    //let the child components handle the update instead of using stale props
     fetchEvents = () => {
         return fetch("/events/api/")
             .then(res => res.json())
             .then(data => {
+                debugger;
                 let sortedEvents = data.events;
                 sortedEvents.sort((a, b) => {
                     return moment(b.date).diff(moment(a.date));
                 });
-                this.setState({ events: sortedEvents });
-                //    console.log(data);
-
-                // data.sort((a, b) => moment(a.date) - moment(b.date));
-                //    console.log(data);
+                return sortedEvents;
             });
     };
 
@@ -75,7 +60,7 @@ class App extends Component {
                             render={props => (
                                 <AdminSingleEvent
                                     id={props.match.params.id}
-                                    fetchEvents={this.fetchEvents}
+                                    /*fetchEvents={this.fetchEvents}*/
                                 />
                             )}
                         />
@@ -95,7 +80,6 @@ class App extends Component {
                             path="/admin/events"
                             render={() => (
                                 <AdminEvents
-                                    events={this.state.events}
                                     // deleteEvent={this.toDelete}
                                     fetchEvents={this.fetchEvents}
                                 />
@@ -110,7 +94,7 @@ class App extends Component {
                         <Route
                             exact
                             path="/admin/editevent/:id"
-                            render={(props) => <EditEvent
+                            render={(props) => <Form
                                 _id={props.match.params.id}
                             />}
                         />

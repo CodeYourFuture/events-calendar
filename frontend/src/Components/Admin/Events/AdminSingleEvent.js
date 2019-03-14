@@ -4,6 +4,7 @@ import moment from "moment";
 import Popup from "reactjs-popup";
 import FloatersOfEvents from "../Floaters/FloatersOfEvent.js";
 import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 // import EditForm from "./EditEvent.js";
 // import Form from "./AdminForm";
 
@@ -134,7 +135,7 @@ class SingleEvent extends React.Component {
                         <div className="grid-item">
                             {/* <a href="/admin/editevent"> */}
                             {/* href={`/admin/event/${this.state.event.event_id}`} */}
-                            <a
+                            {/*<a
                                 href={`/admin/editevent/${
                                     this.state.event._id
                                 }`}
@@ -145,7 +146,11 @@ class SingleEvent extends React.Component {
                                 >
                                     Edit
                                 </button>
-                            </a>
+                            </a>*/}
+                            <Link className="btn btn-warning mr-4 mb-2 mt-4" to={{
+                                pathname: `/admin/editevent/${this.state.event._id}`,
+                                 event: this.state.event
+                            }}> Edit </Link>
                         </div>
                     </div>
                     <div className="grid-item ">

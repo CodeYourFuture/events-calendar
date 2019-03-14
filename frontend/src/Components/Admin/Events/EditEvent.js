@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import Message from "../../Message/Message";
 import { withRouter } from 'react-router'
 
@@ -17,7 +17,6 @@ class EditEvent extends React.Component {
         this.cityRef = React.createRef();
         this.syllabusUrlRef = React.createRef();
         this.addressRef = React.createRef();
-
     }
 
     onSubmit = event => {
@@ -205,4 +204,4 @@ class EditEvent extends React.Component {
         );
     }
 }
-export default withRouter(EditEvent);
+export default withRouter(EditEvent)*/

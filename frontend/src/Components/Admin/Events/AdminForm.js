@@ -1,11 +1,12 @@
 import React from "react";
 import Message from "../../Message/Message";
+import { withRouter } from 'react-router'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment";
 moment.locale("en");
 
-export default class Form extends React.Component {
+class Form extends React.Component {
     state = {
         message: false,
         date: undefined,
@@ -22,6 +23,26 @@ export default class Form extends React.Component {
         this.cityRef = React.createRef();
         this.syllabusUrlRef = React.createRef();
         this.addressRef = React.createRef();
+    }
+    componentDidMount(){
+        if(this.props._id){
+            fetch(`/events/api/${this.props._id}`)
+                .then(res => res.json())
+                .then(data => {
+                    let curEvent = data.event;
+                    this.lessonRef.current.value = curEvent.name;
+                    this.setState({
+                        date: moment(curEvent.date)
+                    });
+                    this.timeRef.current.value = curEvent.time;
+                    this.descriptionRef.current.value = curEvent.description;
+                    this.numVolunteersNeededRef.current.value = curEvent.numVolunteersNeeded;
+                    this.countryRef.current.value = curEvent.country;
+                    this.cityRef.current.value = curEvent.city;
+                    this.syllabusUrlRef.current.value = curEvent.syllabusUrl;
+                    this.addressRef.current.value = curEvent.address;
+                });
+        }
     }
     handleDateChange = date => {
         this.setState({
@@ -64,20 +85,35 @@ export default class Form extends React.Component {
             syllabusUrl: this.syllabusUrlRef.current.value,
             address: this.addressRef.current.value
         };
-        fetch("/events/api", {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify(body)
-        })
-             .then(() => {
-            //     window.location = "/admin/events";
-                 this.props.history.push("/admin/events")
-             })
+        if(this.props._id) {
+            fetch("/events/api/" + this.props._id, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "put",
+                body: JSON.stringify(body)
+            })
+                .then(() => {
+                    this.props.history.push("/admin/event/" + this.props._id);
+                })
+                .catch(error => console.error(error));
+        }
+        else{
+            fetch("/events/api", {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify(body)
+            })
+                .then(() => {
+                    this.props.history.push("/admin/events")
+                })
+                .catch(error => console.error(error));
+        }
 
-            .catch(error => console.error(error));
     };
 
     render() {
@@ -254,3 +290,4 @@ export default class Form extends React.Component {
         );
     }
 }
+export default withRouter(Form)

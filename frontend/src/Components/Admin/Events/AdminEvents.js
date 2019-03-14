@@ -6,8 +6,15 @@ import NavBar from "../../NavBar";
 import AdminEvent from "./AdminEvent.js";
 
 export default class AdminEvents extends React.Component {
+
+    state = {
+        events: []
+    };
     componentDidMount() {
-        this.props.fetchEvents();
+        this.props.fetchEvents().then(
+            data => {this.setState({
+                events: data });
+            });
     }
     render() {
         return (
@@ -25,7 +32,7 @@ export default class AdminEvents extends React.Component {
                         </button>
                     </a>
                 </NavBar>
-                {this.props.events.map(function (event, i) {
+                {this.state.events.map(function (event, i) {
                     return (
                         <div className="event" key={i}>
                             <AdminEvent
