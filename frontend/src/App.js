@@ -23,7 +23,6 @@ class App extends Component {
         return fetch("/events/api/")
             .then(res => res.json())
             .then(data => {
-                debugger;
                 let sortedEvents = data.events;
                 sortedEvents.sort((a, b) => {
                     return moment(b.date).diff(moment(a.date));
@@ -51,7 +50,7 @@ class App extends Component {
                     <div>
                         <Route
                             path="/events"
-                            render={() => <Events events={this.state.events} />}
+                            render={() => <Events fetchEvents={this.fetchEvents} />}
                         />
                         <Route exact path="/" component={mainPage} />
                         <Route path="/event/:id" component={SingleEvent} />
