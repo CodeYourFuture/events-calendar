@@ -16,16 +16,16 @@ export default class FloaterForm extends React.Component {
     onSubmit = event => {
         event.preventDefault();
         const body = {
-            floater_fname: this.firstNameRef.current.value,
-            floater_surname: this.surnameRef.current.value,
-            floater_email: this.emailRef.current.value
+            firstName: this.firstNameRef.current.value,
+            lastName: this.surnameRef.current.value,
+            email: this.emailRef.current.value
         };
-        fetch("/mentors", {
+        fetch("/events/api/volunteers", {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
             },
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify(body)
         })
             .then(response => {

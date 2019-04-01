@@ -1,7 +1,7 @@
 import React from "react";
 
 export default class FloatersOfEvents extends React.Component {
-    state = { mentors: [] };
+    state = { volunteers: [] };
 
     // componentDidMount() {
     //     fetch("/events-floaters/event/" + this.props.id)
@@ -17,7 +17,7 @@ export default class FloatersOfEvents extends React.Component {
                 <p>
                     <strong>Volunteered:</strong>
                 </p>
-                {this.state.mentors.map(floater => {
+                {this.state.volunteers.map(floater => {
                     return (
                         <p key={floater.floaters_events_id}>
                             {floater.floater_fname} {floater.floater_surname}

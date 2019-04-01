@@ -18,11 +18,11 @@ export default class EditFloater extends React.Component {
     onSubmit = event => {
         event.preventDefault();
         const body = {
-            floater_fname: this.floater_fnameRef.current.value,
-            floater_surname: this.floater_surnameRef.current.value,
-            floater_email: this.floater_emailRef.current.value
+            name: this.floater_fnameRef.current.value,
+            surname: this.floater_surnameRef.current.value,
+            email: this.floater_emailRef.current.value
         };
-        fetch("/mentors/" + this.props.floater_id, {
+        fetch("/events/api/volunteers/" + this.props.floater_id, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"

@@ -6,7 +6,7 @@ export default class VolunteerForm extends React.Component {
     state = { allmentors: [], message: false, volunteers: [], message2: false };
 
     componentDidMount() {
-        fetch("/mentors")
+        fetch("/events/api/volunteers")
             .then(res => res.json())
             .then(data => {
                 this.setState({
@@ -21,7 +21,7 @@ export default class VolunteerForm extends React.Component {
             .then(res => res.json())
             .then(data1 => {
                 this.setState({
-                    volunteers: data1
+                    volunteers: data1.volunteers
                 });
             });
     }

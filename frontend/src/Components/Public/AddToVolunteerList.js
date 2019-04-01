@@ -18,7 +18,7 @@ export default class AddToVolunteerList extends React.Component {
             floater_surname: this.surnameRef.current.value,
             floater_email: this.emailRef.current.value
         };
-        fetch("/mentors", {
+        fetch("/events/api/volunteers", {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"

@@ -8,13 +8,13 @@ import FloaterForm from "./FloaterForm";
 import NavBar from "../../NavBar";
 
 export default class Floaters extends React.Component {
-                   state = { mentors: [], message: false };
+                   state = { volunteers: [], message: false };
 
                    _getMentors = () => {
-                       fetch("/mentors")
+                       fetch("/events/api/volunteers")
                            .then(res => res.json())
                            .then(data => {
-                               this.setState({ mentors: data });
+                               this.setState({ volunteers: data.volunteers });
                            });
                    };
 
@@ -22,12 +22,8 @@ export default class Floaters extends React.Component {
                        this._getMentors();
                    }
 
-                   componentDidUpdate() {
-                       this._getMentors();
-                   }
-
                    _deleteFloater = id => {
-                       fetch("/mentors/" + id, {
+                       fetch("/events/api/volunteers/" + id, {
                            method: "delete"
                        })
                            .then(response => {
@@ -76,28 +72,28 @@ export default class Floaters extends React.Component {
                                                Delete
                                            </th>
                                        </tr>
-                                       {this.state.mentors.map(
+                                       {this.state.volunteers.map(
                                            floater => {
                                                return (
                                                    <tr
                                                        key={
-                                                           floater.floater_id
+                                                           floater._id
                                                        }
                                                    >
                                                        <td />
                                                        <td>
                                                            {
-                                                               floater.floater_fname
+                                                               floater.firstName
                                                            }
                                                        </td>
                                                        <td>
                                                            {
-                                                               floater.floater_surname
+                                                               floater.lastName
                                                            }
                                                        </td>
                                                        <td>
                                                            {
-                                                               floater.floater_email
+                                                               floater.email
                                                            }
                                                        </td>
                                                        <td>
@@ -135,7 +131,7 @@ export default class Floaters extends React.Component {
                                                                className="btn btn-link text-danger linkDelete"
                                                                onClick={() => {
                                                                    this._deleteFloater(
-                                                                       floater.floater_id
+                                                                       floater._id
                                                                    );
                                                                }}
                                                            >
