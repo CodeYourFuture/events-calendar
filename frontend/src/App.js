@@ -6,9 +6,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Admin from "./Components/Admin/Admin.js";
 import AdminEvents from "./Components/Admin/Events/AdminEvents.js";
 import FloaterForm from "./Components/Admin/Floaters/FloaterForm";
-import mainPage from "./Components/Public/MainPage";
+import MainPage from "./Components/Public/MainPage";
 import Floaters from "./Components/Admin/Floaters/Floaters.js";
-import SingleEvent from "./Components/Public/SingleEvent";
+import AdminForm from "./Components/Admin/Events/AdminForm";
 import AdminSingleEvent from "./Components/Admin/Events/AdminSingleEvent";
 import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
 import moment from "moment";
@@ -31,40 +31,13 @@ class App extends Component {
             });
     };
 
-    // toDelete(id) {
-    //     fetch("/events/api/" + id, {
-    //         method: "delete"
-    //     }).then(response => {
-    //         if (response.status === 500) {
-    //             alert("Error: Failed to delete event");
-    //         } else {
-    //             window.location.reload();
-    //         }
-    //     });
-    // }
-
     render() {
         return (
             <div>
                 <BrowserRouter>
                     <div>
-                        <Route
-                            path="/events"
-                            render={() => <Events fetchEvents={this.fetchEvents} />}
-                        />
-                        <Route exact path="/" component={mainPage} />
-                        <Route path="/event/:id" component={SingleEvent} />
-                        <Route
-                            path="/admin/event/:id"
-                            render={props => (
-                                <AdminSingleEvent
-                                    id={props.match.params.id}
-                                    /*fetchEvents={this.fetchEvents}*/
-                                />
-                            )}
-                        />
+                        <Route exact path="/" component={MainPage} />
 
-                        <Route exact path="/admin" component={Admin} />
                         <Route path="/admin/events/add" component={Form} />
                         <Route
                             path="/admin/floaters/add"
@@ -89,18 +62,10 @@ class App extends Component {
                             path="/admin/floaters"
                             render={() => <Floaters />}
                         />
-                        <Route exact path="/admin/newevent" component={Form} />
-                        <Route
-                            exact
-                            path="/admin/editevent/:id"
-                            render={(props) => <Form
-                                _id={props.match.params.id}
-                            />}
-                        />
-                        {/* <Route
+                        { <Route
                             path="/admin/event/:id"
-                            component={AdminSingleEvent}
-                        /> */}
+                            component={AdminForm}
+                        /> }
                     </div>
                 </BrowserRouter>
             </div>

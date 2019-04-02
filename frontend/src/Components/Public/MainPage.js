@@ -1,30 +1,39 @@
 import React from "react";
 import "../../Style/MainPage.css";
-import NavBar from "../NavBar";
-const mainPage = () => (
-    <div className="container">
-        <NavBar>
-            <h1 className="myHeader ml-5">Events Calendar</h1>
-        </NavBar>
-        <div>
-            <ul className="nav flex-column">
-                <h2>
-                    <a href="/admin">
-                        <li className="nav-item text-center shadow-lg p-3 mb-5 rounded">
-                            Admin
-                        </li>
-                    </a>
-                </h2>
-                <h2>
-                    <a href="/events">
-                        <li className="nav-item text-center shadow-lg p-3 mb-5  rounded">
-                            Events
-                        </li>
-                    </a>
-                </h2>
-            </ul>
-        </div>
-    </div>
-);
+import "../../Style/Header.css";
 
-export default mainPage;
+import moment from "moment/moment";
+import Events from "./Events"
+import Header from "./Header"
+import Filter from "./Filter"
+
+class MainPage extends React.Component {
+
+
+    fetchEvents = () => {
+        return fetch("/events/api/")
+            .then(res => res.json())
+            .then(data => {
+                let sortedEvents = data.events;
+                sortedEvents.sort((a, b) => {
+                    return moment(b.date).diff(moment(a.date));
+                });
+                return sortedEvents;
+            });
+    };
+
+    render() {
+        return (
+            <div className=" ">
+                <Header />
+
+                <Filter />
+                <Events fetchEvents={this.fetchEvents}/>
+
+            </div>
+        )
+    }
+}
+
+
+export default MainPage;

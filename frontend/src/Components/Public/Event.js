@@ -3,55 +3,128 @@ import moment from "moment";
 import "../../Style/Event.css";
 import "../../Style/Events.css";
 import Popup from "reactjs-popup";
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import Hidden from '@material-ui/core/Hidden'
 
-const Event = props => {
-    return (
-        <span className="event-grid-container">
-            <div className="grid-item">
-                <h4 className="mt-2">
-                    {moment(props.date).format("Do MMMM  YYYY")}
-                </h4>
-            </div>
-            <div className="grid-item">
-                <h1 className="font-weight-bold">{props.name}</h1>
-                <div className=" ">
-                    {props.country}, {props.city}
-                </div>
-                <small>
-                    <a
-                        className=" btn-link "
-                        href={`/event/${props._id}`}
-                        alt={props.name}
-                    >
-                        class details and address
-                    </a>
-                </small>
-                <div className=" ">
-                    <Popup
-                        trigger={
-                            <button
-                                type="button"
-                                className="btn btn-primary mt-4"
-                            >
-                                Volunteer
-                            </button>
-                        }
-                        position="right center"
-                        modal
-                    >
-                        {/* <VolunteerForm event_id={props.event_id} /> */}
-                    </Popup>
-                </div>
-            </div>
+import { Link } from 'react-router-dom'
 
-            <div className="grid-item ">
-                <p className="mt-2">
-                    <strong>{props.numVolunteersNeeded}</strong> more volunteers
-                    needed
-                </p>
-            </div>
-        </span>
-    );
-};
+class Event extends React.Component {
+
+    state = {
+        numVolunteersNeeded: this.props.event.numVolunteersNeeded,
+        isVolunteering: this.props.event.isVolunteering || false,
+    };
+    constructor(props){
+        super(props);
+    }
+
+    submitVolunteer(event){
+        event.stopPropagation();
+        if(!this.state.isVolunteering) {
+            //TODO: submit volunteer id derived from userId
+            //in case of success
+            this.setState({
+                numVolunteersNeeded: Math.max(0, this.state.numVolunteersNeeded - 1),
+                isVolunteering : true,
+            });
+        }
+        else{
+            //TODO: submit volunteer id derived from userId
+            //in case of success
+            this.setState({
+                numVolunteersNeeded: this.state.numVolunteersNeeded + 1,
+                isVolunteering : false,
+            });
+        }
+    }
+
+    render(){
+        return (
+            <ExpansionPanel style={{marginBottom: "1em"}}>
+
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                    <Grid container alignItems="center" spacing={24}>
+                        <Grid item xs={3} className="grid-item" style={{textAlign: "center"}}>
+                            <h5 className="mt-2">
+                                {moment(this.props.event.date).format("Do MMMM  YYYY")}
+                            </h5>
+                        </Grid>
+                        <Grid item xs={6} className="grid-item" style={{textAlign: "center"}}>
+                            <h2 className="font-weight-bold">{this.props.event.name}</h2>
+                            <p className="mt-2">
+                                <strong>{this.state.numVolunteersNeeded}</strong> more volunteers
+                                needed
+                            </p>
+                        </Grid>
+
+                        <Grid item xs={3} className=" ">
+                            {!this.state.isVolunteering ?
+                                <Button variant="contained" color="primary"
+                                        onClick={e => this.submitVolunteer(e)}>
+                                    <Hidden mdDown>Volunteer &nbsp;</Hidden>
+                                    <AddIcon/>
+                                </Button> :
+                                <Button variant="contained" color="primary"
+                                        onClick={e => this.submitVolunteer(e)}>
+                                    <Hidden mdDown>Cancel &nbsp; &nbsp; &nbsp;</Hidden>
+                                    <RemoveIcon/>
+                                </Button> }
+                        </Grid>
+                    </Grid>
+                </ExpansionPanelSummary>
+
+                <ExpansionPanelDetails>
+                    <Grid container alignItems="center" spacing={24}>
+                        <Grid item xs={3} style={{textAlign: "center"}}>
+                            <p>Time: {this.props.event.time} </p>
+                        </Grid>
+                        <Grid item xs={1}/>
+
+                        <Grid item xs={3} style={{textAlign: "center"}}>
+                            <p style={{marginBottom: "0"}}>Address: </p>
+                            <a href={"https://www.google.com/maps/search/?api=1&query=" +
+                            encodeURI(this.props.event.city + ", " + this.props.event.address)
+                            }> {this.props.event.address}</a>
+                        </Grid>
+                        <Grid item xs={1}/>
+
+                        <Grid item xs={3} style={{textAlign: "center"}}>
+                            <a
+                                href={this.props.event.syllabusUrl} target="_blank">Syllabus
+                            </a>
+                        </Grid>
+                        <Grid item xs={12} style={{textAlign: "justify"}}>
+                            {this.props.event.description ?
+                                <p className="eventDescription">{this.props.event.description}</p>
+                                : <p> No description provided </p>}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button component={Link} to={"/admin/event/" + this.props.event._id}
+                                    variant="contained" color="secondary">
+                                Details &nbsp;
+                                <EditIcon/>
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button component={Link} to={"/admin/floaters/" + this.props.event._id}
+                                    variant="contained" color="secondary">
+                                Volunteers &nbsp;
+                                <EditIcon/>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+        );
+    }
+}
 
 export default Event;

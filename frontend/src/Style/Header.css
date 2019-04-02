@@ -1,0 +1,26 @@
+.appHeader{
+    border-bottom: #0141a8 2px solid;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.volButton{
+}
+.logo{
+    color:#0141a8;
+    text-shadow: 1px 1px #000000;
+}
+.logInButton{
+}
+
+/*@media (min-width: 960px) {*/
+    /*.volButton{*/
+        /*margin-left: 10%;*/
+    /*}*/
+    /*.logo{*/
+        /*margin-left: 30%;*/
+    /*}*/
+    /*.logInButton{*/
+        /*right: 10%;*/
+    /*}*/
+/*}*/

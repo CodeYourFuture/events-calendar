@@ -4,6 +4,10 @@ import { withRouter } from 'react-router'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment";
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom'
+
 moment.locale("en");
 
 class Form extends React.Component {
@@ -25,8 +29,8 @@ class Form extends React.Component {
         this.addressRef = React.createRef();
     }
     componentDidMount(){
-        if(this.props._id){
-            fetch(`/events/api/${this.props._id}`)
+        if(this.props.match.params.id){
+            fetch(`/events/api/${this.props.match.params.id}`)
                 .then(res => res.json())
                 .then(data => {
                     let curEvent = data.event;
@@ -85,8 +89,8 @@ class Form extends React.Component {
             syllabusUrl: this.syllabusUrlRef.current.value,
             address: this.addressRef.current.value
         };
-        if(this.props._id) {
-            fetch("/events/api/" + this.props._id, {
+        if(this.props.match.params.id) {
+            fetch("/events/api/" + this.props.match.params.id, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json"
@@ -95,7 +99,7 @@ class Form extends React.Component {
                 body: JSON.stringify(body)
             })
                 .then(() => {
-                    this.props.history.push("/admin/event/" + this.props._id);
+                    this.props.history.push("/");
                 })
                 .catch(error => console.error(error));
         }
@@ -109,7 +113,7 @@ class Form extends React.Component {
                 body: JSON.stringify(body)
             })
                 .then(() => {
-                    this.props.history.push("/admin/events")
+                    this.props.history.push("/")
                 })
                 .catch(error => console.error(error));
         }
@@ -267,19 +271,17 @@ class Form extends React.Component {
                                         className="btn-toolbar justify-content-between"
                                         role="toolbar"
                                     >
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={e => this.onSubmit(e)}
-                                        >
+                                        <Button
+                                            variant="contained" color="primary"
+                                            onClick={e => this.onSubmit(e)} >
                                             Submit
-                                        </button>
+                                        </Button>
 
-                                        <a
-                                            className="btn btn-primary "
-                                            href="/admin/events"
-                                        >
-                                            Back
-                                        </a>
+                                        <Button component={Link}
+                                                variant="contained" color="primary"
+                                                to="/" >
+                                            Cancel
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
