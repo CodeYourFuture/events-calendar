@@ -23,7 +23,9 @@ class Header extends React.Component {
                         </Grid>
                         <Grid item md={2} />
                         <Grid item md={2} xs={4} style={{textAlign: "center"}}>
-                            <h1 className="logo">Events</h1>
+                            <Link to="/" style={{textDecoration: "none", textAlign: "center"}}>
+                                <h1 className="logo">Events</h1>
+                            </Link>
                         </Grid>
                         <Grid item md={2} />
                         <Grid item md={2} xs={4} style={{textAlign: "center"}}>

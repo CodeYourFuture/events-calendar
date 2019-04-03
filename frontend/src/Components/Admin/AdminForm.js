@@ -1,5 +1,5 @@
 import React from "react";
-import Message from "../../Message/Message";
+import Message from "../Message/Message";
 import { withRouter } from 'react-router'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
@@ -10,7 +10,7 @@ import {Link} from 'react-router-dom'
 
 moment.locale("en");
 
-class Form extends React.Component {
+class AdminForm extends React.Component {
     state = {
         message: false,
         date: undefined,
@@ -292,4 +292,4 @@ class Form extends React.Component {
         );
     }
 }
-export default withRouter(Form)
+export default withRouter(AdminForm)

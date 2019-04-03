@@ -1,11 +1,11 @@
 import React from "react";
-import "../../Style/MainPage.css";
 import "../../Style/Header.css";
 
 import moment from "moment/moment";
 import Events from "./Events"
 import Header from "./Header"
 import Filter from "./Filter"
+import Grid from '@material-ui/core/Grid';
 
 class MainPage extends React.Component {
 
@@ -24,7 +24,12 @@ class MainPage extends React.Component {
     render() {
         return (
             <div>
-                <Filter />
+                <Grid container>
+                    <Grid item md={8} xs={9}/>
+                    <Grid item xs={2} style={{textAlign: "right"}}>
+                        <Filter/>
+                    </Grid>
+                </Grid>
                 <Events fetchEvents={this.fetchEvents}/>
             </div>
         )

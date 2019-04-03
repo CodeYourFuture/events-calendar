@@ -1,7 +1,6 @@
 import React from "react";
 import Event from "./Event.js";
 import "../../Style/Event.css";
-import "../../Style/Events.css";
 import Grid from '@material-ui/core/Grid';
 
 class Events extends React.Component {

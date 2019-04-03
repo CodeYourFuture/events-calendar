@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import "./Style/App.css";
-import Form from "./Components/Admin/Events/AdminForm.js";
 import { BrowserRouter, Route } from "react-router-dom";
-import AdminEvents from "./Components/Admin/Events/AdminEvents.js";
-import FloaterForm from "./Components/Admin/Floaters/FloaterForm";
 import MainPage from "./Components/Public/MainPage";
-import Floaters from "./Components/Admin/Floaters/Floaters.js";
-import AdminForm from "./Components/Admin/Events/AdminForm";
-import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
+import Floaters from "./Components/Admin/Floaters.js";
+import AdminForm from "./Components/Admin/AdminForm";
 import Header from "./Components/Public/Header"
+import Profile from "./Components/Public/Profile"
 import moment from "moment";
 moment.locale("en");
 
@@ -38,34 +34,17 @@ class App extends Component {
 
                         <Route exact path="/" component={MainPage} />
 
-                        <Route path="/admin/events/add" component={Form} />
-                        <Route
-                            path="/admin/floaters/add"
-                            component={FloaterForm}
-                        />
-                        <Route
-                            path="/admin/floaters/addToList"
-                            component={AddToVolunteerList}
-                        />
+                        <Route path="/profile" component={Profile} />
                         <Route
                             exact
-                            path="/admin/events"
-                            render={() => (
-                                <AdminEvents
-                                    // deleteEvent={this.toDelete}
-                                    fetchEvents={this.fetchEvents}
-                                />
-                            )}
-                        />
-                        <Route
-                            exact
-                            path="/admin/floaters"
+                            path="/admin/floaters/:id?"
                             render={() => <Floaters />}
                         />
-                        { <Route
-                            path="/admin/event/:id"
+                        <Route path="/admin/events/add" component={AdminForm} />
+                        <Route
+                            path="/admin/event/:id?"
                             component={AdminForm}
-                        /> }
+                        />
                     </div>
                 </BrowserRouter>
             </div>

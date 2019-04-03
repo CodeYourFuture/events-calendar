@@ -1,6 +1,5 @@
 import React from "react";
 import "../Style/Event.css";
-import "../Style/Events.css";
 
 export default class Floaters extends React.Component {
 
