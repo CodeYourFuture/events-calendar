@@ -1,149 +1,108 @@
 import React from "react";
-import "../../../Style/Event.css";
-import Message from "../../Message/Message";
 import Popup from "reactjs-popup";
 import EditFloater from "./EditFloater.js";
-import "../../../Style/Events.css";
 import FloaterForm from "./FloaterForm";
-import NavBar from "../../NavBar";
+import Grid from '@material-ui/core/Grid'
+import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import EditIcon from '@material-ui/icons/Edit';
+import CancelIcon from '@material-ui/icons/Cancel';
 
-export default class Floaters extends React.Component {
-                   state = { volunteers: [], message: false };
+import { withStyles } from '@material-ui/styles';
+import PropTypes from 'prop-types';
 
-                   _getMentors = () => {
-                       fetch("/events/api/volunteers")
-                           .then(res => res.json())
-                           .then(data => {
-                               this.setState({ volunteers: data.volunteers });
-                           });
-                   };
 
-                   componentDidMount() {
-                       this._getMentors();
-                   }
+const styles = theme => ({
+    root:{
+        marginTop: '1em',
+    },
+    head:{
+        // backgroundColor: "#e1f4ef",
+        color: "#FFFFFF",
+    },
+    row: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: "#e5ffff",
+        }
+    },
+});
 
-                   _deleteFloater = id => {
-                       fetch("/events/api/volunteers/" + id, {
-                           method: "delete"
-                       })
-                           .then(response => {
-                               this.setState({ message: true });
-                               this._getMentors();
-                           })
-                           .catch(error => console.error(error));
-                   };
+class Floaters extends React.Component {
+    state = {volunteers: [], message: false};
 
-                   render() {
-                       return <div className="container mt-2">
-                               <NavBar>
-                                   <h1 className="myHeader ml-5">
-                                       Code Your Future Floaters
-                                   </h1>
-                                   <Popup trigger={<button className="btn btn-outline-primary mb-2 ml-2 sideButton mr-5 ">
-                                               Add a New Floater
-                                           </button>} position="right center" modal>
-                                       <FloaterForm />
-                                   </Popup>
-                                   <a href="/admin">
-                                       <button className="btn btn-outline-primary ml-2 mb-2 sideButton">
-                                           Back
-                                       </button>
-                                   </a>
-                               </NavBar>
-                               <Message show={this.state.message} status="success" message="New floater is deleted" />
+    _getMentors = () => {
+        fetch("/events/api/volunteers")
+            .then(res => res.json())
+            .then(data => {
+                this.setState({volunteers: data.volunteers});
+            });
+    };
 
-                               <table className="table table-striped table-dark">
-                                   <tbody>
-                                       <tr>
-                                           <th />
-                                           <th scope="col">
-                                               First Name{" "}
-                                           </th>
-                                           <th scope="col">
-                                               Surname{" "}
-                                           </th>
-                                           <th scope="col">
-                                               Email
-                                           </th>
-                                           <th scope="col">
-                                               Edit
-                                           </th>
-                                           <th scope="col">
-                                               Delete
-                                           </th>
-                                       </tr>
-                                       {this.state.volunteers.map(
-                                           floater => {
-                                               return (
-                                                   <tr
-                                                       key={
-                                                           floater._id
-                                                       }
-                                                   >
-                                                       <td />
-                                                       <td>
-                                                           {
-                                                               floater.firstName
-                                                           }
-                                                       </td>
-                                                       <td>
-                                                           {
-                                                               floater.lastName
-                                                           }
-                                                       </td>
-                                                       <td>
-                                                           {
-                                                               floater.email
-                                                           }
-                                                       </td>
-                                                       <td>
-                                                           <Popup
-                                                               trigger={
-                                                                   <button
-                                                                       type="button"
-                                                                       className="btn btn-link text-warning linkEdit"
-                                                                   >
-                                                                       Edit
-                                                                   </button>
-                                                               }
-                                                               position="right center"
-                                                               modal
-                                                           >
-                                                               <EditFloater
-                                                                   floater_fname={
-                                                                       floater.floater_fname
-                                                                   }
-                                                                   floater_surname={
-                                                                       floater.floater_surname
-                                                                   }
-                                                                   floater_email={
-                                                                       floater.floater_email
-                                                                   }
-                                                                   floater_id={
-                                                                       floater.floater_id
-                                                                   }
-                                                               />
-                                                           </Popup>
-                                                       </td>
-                                                       <td>
-                                                           <button
-                                                               type="button"
-                                                               className="btn btn-link text-danger linkDelete"
-                                                               onClick={() => {
-                                                                   this._deleteFloater(
-                                                                       floater._id
-                                                                   );
-                                                               }}
-                                                           >
-                                                               Delete
-                                                           </button>
-                                                       </td>
-                                                   </tr>
-                                               );
-                                           }
-                                       )}
-                                   </tbody>
-                               </table>
-                           </div>;
-                   }
-               }
+    componentDidMount() {
+        this._getMentors();
+    }
+
+    _deleteFloater = id => {
+        fetch("/events/api/volunteers/" + id, {
+            method: "delete"
+        })
+            .then(response => {
+                this.setState({message: true});
+                this._getMentors();
+            })
+            .catch(error => console.error(error));
+    };
+
+    render() {
+        const {classes} = this.props;
+        return (
+            <Grid container className={classes.root}>
+                <Grid item md={1}/>
+                <Grid item md={10} xs={12}>
+                    <Table>
+                        <TableHead>
+                            <TableRow className={classes.head}>
+                                <TableCell>First Name</TableCell>
+                                <TableCell>Last Name</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell> </TableCell>
+                                <TableCell> </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.volunteers.map(vol => (
+                                <TableRow key={vol._id} className={classes.row}>
+                                    <TableCell>{vol.firstName}</TableCell>
+                                    <TableCell>{vol.lastName}</TableCell>
+                                    <TableCell>{vol.email}</TableCell>
+                                    <TableCell>
+                                        <Button variant="contained" color="primary"
+                                        >
+                                            <EditIcon/>
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button variant="contained" color="primary"
+                                        >
+                                            <CancelIcon/>
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Grid>
+                <Grid item md={1}/>
+            </Grid>
+        )
+    }
+}
+Floaters.propTypes = {
+    classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Floaters);

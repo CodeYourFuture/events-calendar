@@ -106,14 +106,14 @@ class Event extends React.Component {
                                 <p className="eventDescription">{this.props.event.description}</p>
                                 : <p> No description provided </p>}
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{textAlign: "center"}}>
                             <Button component={Link} to={"/admin/event/" + this.props.event._id}
                                     variant="contained" color="secondary">
                                 Details &nbsp;
                                 <EditIcon/>
                             </Button>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{textAlign: "center"}}>
                             <Button component={Link} to={"/admin/floaters/" + this.props.event._id}
                                     variant="contained" color="secondary">
                                 Volunteers &nbsp;

@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import "./Style/App.css";
-import Events from "./Components/Public/Events.js";
 import Form from "./Components/Admin/Events/AdminForm.js";
 import { BrowserRouter, Route } from "react-router-dom";
-import Admin from "./Components/Admin/Admin.js";
 import AdminEvents from "./Components/Admin/Events/AdminEvents.js";
 import FloaterForm from "./Components/Admin/Floaters/FloaterForm";
 import MainPage from "./Components/Public/MainPage";
 import Floaters from "./Components/Admin/Floaters/Floaters.js";
 import AdminForm from "./Components/Admin/Events/AdminForm";
-import AdminSingleEvent from "./Components/Admin/Events/AdminSingleEvent";
 import AddToVolunteerList from "./Components/Public/AddToVolunteerList.js";
+import Header from "./Components/Public/Header"
 import moment from "moment";
 moment.locale("en");
 
@@ -36,6 +34,8 @@ class App extends Component {
             <div>
                 <BrowserRouter>
                     <div>
+                        <Header />
+
                         <Route exact path="/" component={MainPage} />
 
                         <Route path="/admin/events/add" component={Form} />

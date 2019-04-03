@@ -9,7 +9,6 @@ import Filter from "./Filter"
 
 class MainPage extends React.Component {
 
-
     fetchEvents = () => {
         return fetch("/events/api/")
             .then(res => res.json())
@@ -24,12 +23,9 @@ class MainPage extends React.Component {
 
     render() {
         return (
-            <div className=" ">
-                <Header />
-
+            <div>
                 <Filter />
                 <Events fetchEvents={this.fetchEvents}/>
-
             </div>
         )
     }

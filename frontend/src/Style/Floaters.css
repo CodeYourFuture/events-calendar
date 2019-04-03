@@ -1,0 +1,6 @@
+.tableRow:nth-of-type(odd) {
+    backgroundColor: "#bbcaca",
+}
+.tableRow:nth-of-type(even) {
+     backgroundColor: "#8b9fa4",
+ }
