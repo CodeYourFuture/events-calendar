@@ -1,7 +1,5 @@
 import React from "react";
 import Popup from "reactjs-popup";
-import EditFloater from "./EditFloater.js";
-import FloaterForm from "./FloaterForm";
 import Grid from '@material-ui/core/Grid'
 import Table from '@material-ui/core/Table';
 import Button from '@material-ui/core/Button';
@@ -32,27 +30,40 @@ const styles = theme => ({
 });
 
 class Floaters extends React.Component {
-    state = {volunteers: [], message: false};
+    state = {
+        volunteers: [],
+        eventId : undefined,
+    };
 
-    _getMentors = () => {
-        fetch("/events/api/volunteers")
-            .then(res => res.json())
-            .then(data => {
-                this.setState({volunteers: data.volunteers});
-            });
+    getMentors = () => {
+        if(!this.state.eventId) {// no event selected, show general list
+            fetch("/events/api/volunteers")
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({volunteers: data.volunteers});
+                });
+        }
+        else{// show list for event
+            fetch("/events/api/volunteers/"+this.state.eventId)
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({volunteers: data.volunteers});
+                });
+        }
     };
 
     componentDidMount() {
-        this._getMentors();
+        if(this.props.match && this.props.match.params.id)
+            this.setState({eventId: this.props.match.params.id})
+        this.getMentors();
     }
 
-    _deleteFloater = id => {
+    removeFloater = id => {
         fetch("/events/api/volunteers/" + id, {
             method: "delete"
         })
             .then(response => {
-                this.setState({message: true});
-                this._getMentors();
+                this.getMentors();
             })
             .catch(error => console.error(error));
     };
@@ -69,8 +80,8 @@ class Floaters extends React.Component {
                                 <TableCell>First Name</TableCell>
                                 <TableCell>Last Name</TableCell>
                                 <TableCell>Email</TableCell>
-                                <TableCell> </TableCell>
-                                <TableCell> </TableCell>
+                                {/*<TableCell> </TableCell>
+                                <TableCell> </TableCell>*/}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -79,18 +90,17 @@ class Floaters extends React.Component {
                                     <TableCell>{vol.firstName}</TableCell>
                                     <TableCell>{vol.lastName}</TableCell>
                                     <TableCell>{vol.email}</TableCell>
-                                    <TableCell>
-                                        <Button variant="contained" color="primary"
-                                        >
+                                    {/*<TableCell>
+                                        <Button variant="contained" color="primary">
                                             <EditIcon/>
                                         </Button>
                                     </TableCell>
                                     <TableCell>
                                         <Button variant="contained" color="primary"
-                                        >
+                                         onClick={() => this.removeFloater(vol._id)}>
                                             <CancelIcon/>
                                         </Button>
-                                    </TableCell>
+                                    </TableCell>*/}
                                 </TableRow>
                             ))}
                         </TableBody>
