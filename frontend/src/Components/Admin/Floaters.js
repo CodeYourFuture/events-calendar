@@ -9,16 +9,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
+import swal from "sweetalert"
+import axios from "axios"
 
-import { withStyles } from '@material-ui/styles';
+import {withStyles} from '@material-ui/styles';
 import PropTypes from 'prop-types';
 
 
 const styles = theme => ({
-    root:{
+    root: {
         marginTop: '1em',
     },
-    head:{
+    head: {
         // backgroundColor: "#e1f4ef",
         color: "#FFFFFF",
     },
@@ -32,40 +34,36 @@ const styles = theme => ({
 class Floaters extends React.Component {
     state = {
         volunteers: [],
-        eventId : undefined,
+        eventId: "",
     };
 
     getMentors = () => {
-        if(!this.state.eventId) {// no event selected, show general list
-            fetch("/events/api/volunteers")
-                .then(res => res.json())
-                .then(data => {
-                    this.setState({volunteers: data.volunteers});
-                });
-        }
-        else{// show list for event
-            fetch("/events/api/volunteers/"+this.state.eventId)
-                .then(res => res.json())
-                .then(data => {
-                    this.setState({volunteers: data.volunteers});
-                });
-        }
+        //if event id is blank, fetch general list
+        axios.get("/events/api/volunteers/" + this.state.eventId)
+            .then(response => {
+                this.setState({volunteers: response.data.volunteers});
+            })
+            .catch(error => {
+                swal("Error", "Could not fetch volunteers list", "error");
+                console.error(error);
+            })
     };
 
     componentDidMount() {
-        if(this.props.match && this.props.match.params.id)
+        if (this.props.match && this.props.match.params.id)
             this.setState({eventId: this.props.match.params.id})
         this.getMentors();
     }
 
     removeFloater = id => {
-        fetch("/events/api/volunteers/" + id, {
-            method: "delete"
-        })
+        axios.delete("/events/api/volunteers/" + id)
             .then(response => {
                 this.getMentors();
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                swal("Error", "Could not remove volunteer", "error");
+                console.error(error);
+            });
     };
 
     render() {
@@ -111,6 +109,7 @@ class Floaters extends React.Component {
         )
     }
 }
+
 Floaters.propTypes = {
     classes: PropTypes.object.isRequired
 };

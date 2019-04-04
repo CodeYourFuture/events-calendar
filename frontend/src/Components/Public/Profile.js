@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField"
 import Filter from "./Filter"
 import {withStyles} from '@material-ui/styles';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     textInput: {
@@ -20,6 +21,9 @@ class Profile extends React.Component {
         this.firstNameRef = React.createRef();
         this.lastNameRef = React.createRef();
         this.emailRef = React.createRef();
+    }
+    submitProfile(){
+        
     }
 
     render() {
@@ -59,6 +63,11 @@ class Profile extends React.Component {
                                }}
                     />
                     <Filter />
+                    <br/><br/>
+                    <Button className="logInButton" variant="contained" color="secondary"
+                    onClick={this.submitProfileData}>
+                        Submit
+                    </Button>
                 </Grid>
                 <Grid items md={4} xs={3}/>
             </Grid>

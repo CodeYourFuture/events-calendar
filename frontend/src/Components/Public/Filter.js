@@ -3,6 +3,8 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import swal from "sweetalert"
+import axios from "axios"
 
 class Filter extends React.Component {
     state = {
@@ -13,11 +15,14 @@ class Filter extends React.Component {
         this.setState({[event.target.name]: event.target.value});
     };
     fetchCities(){// TODO ??
-        fetch("/application-process/cities")
-            .then(res => res.json())
-            .then(data => {
-                this.setState({volunteers: data.volunteers});
-            });
+        axios.get("/application-process/cities")
+            .then(response => {
+                this.setState({cities: response.data.cities});
+            })
+            .catch(error => {
+                swal("Error", "Could not fetch cities", "error");
+                console.error(error);
+            })
     }
 
     render() {

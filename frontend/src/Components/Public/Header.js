@@ -16,7 +16,7 @@ class Header extends React.Component {
                             <Grid item xs={12}>
                                 <Button component={Link} to={"/admin/floaters"}
                                         variant="contained" color="secondary">
-                                    <Hidden mdDown>Dashboard</Hidden> &nbsp;
+                                    <Hidden mdDown>Dashboard &nbsp;</Hidden>
                                     <SettingsIcon/>
                                 </Button>
                             </Grid>

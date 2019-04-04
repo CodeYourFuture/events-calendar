@@ -1,9 +1,10 @@
 import React from "react";
-import Message from "../Message/Message";
 import { withRouter } from 'react-router'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment";
+import swal from "sweetalert"
+import axios from "axios"
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom'
@@ -12,7 +13,6 @@ moment.locale("en");
 
 class AdminForm extends React.Component {
     state = {
-        message: false,
         date: undefined,
         eventDateError: ""
     };
@@ -30,10 +30,9 @@ class AdminForm extends React.Component {
     }
     componentDidMount(){
         if(this.props.match.params.id){
-            fetch(`/events/api/${this.props.match.params.id}`)
-                .then(res => res.json())
-                .then(data => {
-                    let curEvent = data.event;
+            axios.get(`/events/api/${this.props.match.params.id}`)
+                .then(response => {
+                    let curEvent = response.data.event;
                     this.lessonRef.current.value = curEvent.name;
                     this.setState({
                         date: moment(curEvent.date)
@@ -45,6 +44,10 @@ class AdminForm extends React.Component {
                     this.cityRef.current.value = curEvent.city;
                     this.syllabusUrlRef.current.value = curEvent.syllabusUrl;
                     this.addressRef.current.value = curEvent.address;
+                })
+                .catch(error =>{
+                    swal("Error","Could not fetch event data", "error");
+                    console.error(error);
                 });
         }
     }
@@ -90,32 +93,24 @@ class AdminForm extends React.Component {
             address: this.addressRef.current.value
         };
         if(this.props.match.params.id) {
-            fetch("/events/api/" + this.props.match.params.id, {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                method: "put",
-                body: JSON.stringify(body)
-            })
-                .then(() => {
+            axios.put("/events/api/" + this.props.match.params.id, body)
+                .then(response => {
                     this.props.history.push("/");
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    swal("Error", "Could not update event data", "error");
+                    console.error(error);
+                });
         }
         else{
-            fetch("/events/api", {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(body)
-            })
-                .then(() => {
-                    this.props.history.push("/")
+            axios.post("/events/api/", body)
+                .then(response => {
+                    this.props.history.push("/");
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    swal("Error", "Could not upload event data", "error");
+                    console.error(error);
+                });
         }
 
     };
@@ -123,11 +118,6 @@ class AdminForm extends React.Component {
     render() {
         return (
             <div className="container mt-2">
-                <Message
-                    show={this.state.message}
-                    status="success"
-                    message="New event is added"
-                />
                 <h1 className="text-center mb-3">Add Events</h1>
                 <form>
                     <div className="form-group">

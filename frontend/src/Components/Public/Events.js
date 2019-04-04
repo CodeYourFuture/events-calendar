@@ -11,7 +11,7 @@ class Events extends React.Component {
 
 
     componentDidMount() {
-        this.props.fetchEvents().then(
+        this.props.getEvents().then(
             data => {this.setState({
                 events: data });
             //TODO: add a field to mark those you've volunteered for

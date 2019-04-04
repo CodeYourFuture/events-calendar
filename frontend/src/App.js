@@ -12,18 +12,6 @@ class App extends Component {
 
     componentDidMount() {
     }
-    //let the child components handle the update instead of using stale props
-    fetchEvents = () => {
-        return fetch("/events/api/")
-            .then(res => res.json())
-            .then(data => {
-                let sortedEvents = data.events;
-                sortedEvents.sort((a, b) => {
-                    return moment(b.date).diff(moment(a.date));
-                });
-                return sortedEvents;
-            });
-    };
 
     render() {
         return (
