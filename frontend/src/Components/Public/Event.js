@@ -13,8 +13,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Hidden from '@material-ui/core/Hidden'
-
 import { Link } from 'react-router-dom'
+import AuthService from "../Services/AuthService"
 
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
@@ -76,7 +76,7 @@ class Event extends React.Component {
                         </Grid>
 
                         <Grid item xs={3} className=" ">
-                            {!this.state.isVolunteering ?
+                            {!AuthService.loggedIn() ? null : !this.state.isVolunteering ?
                                 <Button variant="contained" color="primary"
                                         onClick={e => this.submitVolunteer(e)}>
                                     <Hidden mdDown>Volunteer &nbsp;</Hidden>

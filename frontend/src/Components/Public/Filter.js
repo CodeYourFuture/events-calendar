@@ -9,13 +9,16 @@ import axios from "axios"
 class Filter extends React.Component {
     state = {
         chosenCity: "Any",
-        cities: ["Any"]
+        cities: []
     };
     handleChange = event => {
         this.setState({[event.target.name]: event.target.value});
     };
+    componentDidMount(){
+        this.fetchCities();
+    }
     fetchCities(){// TODO ??
-        axios.get("/application-process/cities")
+        axios.get("/events/api/cities")
             .then(response => {
                 this.setState({cities: response.data.cities});
             })
@@ -40,9 +43,9 @@ class Filter extends React.Component {
                     <MenuItem value="Any">
                         <em>Any</em>
                     </MenuItem>
-                    <MenuItem value={"London"}>London</MenuItem>
-                    <MenuItem value={"Glasgow"}>Glasgow</MenuItem>
-                    <MenuItem value={"Rome"}>Rome</MenuItem>
+                    {this.state.cities.map(city =>
+                        <MenuItem value={city.name}>{city.name}</MenuItem>
+                    )}
                 </Select>
             </FormControl>
         )

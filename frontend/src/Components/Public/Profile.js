@@ -23,7 +23,7 @@ class Profile extends React.Component {
         this.emailRef = React.createRef();
     }
     submitProfile(){
-        
+
     }
 
     render() {
@@ -63,6 +63,7 @@ class Profile extends React.Component {
                                }}
                     />
                     <Filter />
+                    {/*TODO add userKind*/}
                     <br/><br/>
                     <Button className="logInButton" variant="contained" color="secondary"
                     onClick={this.submitProfileData}>

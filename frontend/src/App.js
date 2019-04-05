@@ -5,6 +5,10 @@ import Floaters from "./Components/Admin/Floaters.js";
 import AdminForm from "./Components/Admin/AdminForm";
 import Header from "./Components/Public/Header"
 import Profile from "./Components/Public/Profile"
+import RedirectLogin from "./Components/Public/RedirectLogin"
+import Login from "./Components/Public/Login"
+
+
 import moment from "moment";
 moment.locale("en");
 
@@ -33,6 +37,9 @@ class App extends Component {
                             path="/admin/event/:id?"
                             component={AdminForm}
                         />
+                        <Route path="/login" component={Login} />
+                        <Route path="/log-in/:token/:admin?" component={RedirectLogin} />
+
                     </div>
                 </BrowserRouter>
             </div>
