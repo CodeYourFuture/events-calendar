@@ -26,7 +26,7 @@ class App extends Component {
 
                         <Route exact path="/" component={MainPage} />
 
-                        <Route path="/profile" component={Profile} />
+                        <Route path="/profile" render={() => <Profile />} />
                         <Route
                             exact
                             path="/admin/floaters/:id?"
@@ -37,7 +37,7 @@ class App extends Component {
                             path="/admin/event/:id?"
                             component={AdminForm}
                         />
-                        <Route path="/login" component={Login} />
+                        <Route path="/login" render={() => <Login />} />
                         <Route path="/log-in/:token/:admin?" component={RedirectLogin} />
 
                     </div>

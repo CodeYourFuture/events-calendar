@@ -7,6 +7,8 @@ import Filter from "./Filter"
 import {withStyles} from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import axios from "axios";
+import AuthService from "../Services/AuthService"
 
 const styles = theme => ({
     textInput: {
@@ -21,19 +23,56 @@ class Profile extends React.Component {
         this.firstNameRef = React.createRef();
         this.lastNameRef = React.createRef();
         this.emailRef = React.createRef();
+        this.cityRef = React.createRef();
     }
-    submitProfile(){
-
+    componentDidMount() {
+        this.getProfileData();
     }
+    setFormData = (user) => {
+        this.firstNameRef.current.value = user.firstName || "";
+        this.lastNameRef.current.value = user.lastName || "";
+        this.emailRef.current.value = user.email || "";
+        this.cityRef.current.setState({ chosenCity: user.city || "Any"});
+    };
+    getProfileData(){
+        axios.get("/events/api/user/"+AuthService.getProfile().id)
+            .then(response => {
+                this.setFormData(response.data.admin);
+                this.setState({_id: response.data.admin._id});
+            })
+            .catch(error => {
+                swal("Error", "Failed to fetch profile data", "error");
+                console.error(error);
+            })
+    }
+    submitProfileData = () => {
+        let body = {
+            _id: this.state._id,
+            adminData: {
+                firstName: this.firstNameRef.current.value,
+                lastName: this.lastNameRef.current.value,
+                email: this.emailRef.current.value,
+                city: this.cityRef.current.state.chosenCity,
+            }
+        };
+        axios.put("/events/api/user", body,
+        ).then(response => {
+            this.setFormData(response.data.admin);
+            swal("Success", "Profile updated successfully", "success");
+        }).catch(error => {
+            swal("Error", "Failed to update profile", "error");
+            console.error(error);
+        });
+    };
 
     render() {
         const {classes} = this.props;
         return (
             <Grid container>
-                <Grid items md={4} xs={3}/>
-                <Grid items md={4} xs={6} style={{textAlign:"left"}}>
+                <Grid item md={4} xs={3}/>
+                <Grid item md={4} xs={6} style={{textAlign:"left"}}>
                     <TextField required
-                               ref={this.firstNameRef}
+                               inputRef={this.firstNameRef}
                                label="First Name"
                                className={classes.textInput}
                                margin="normal"
@@ -43,7 +82,7 @@ class Profile extends React.Component {
                                }}
                     />
                     <TextField required
-                               ref={this.lastNameRef}
+                               inputRef={this.lastNameRef}
                                label="Last Name"
                                className={classes.textInput}
                                margin="normal"
@@ -53,7 +92,7 @@ class Profile extends React.Component {
                                }}
                     />
                     <TextField required
-                               ref={this.emailRef}
+                               inputRef={this.emailRef}
                                label="Email"
                                className={classes.textInput}
                                margin="normal"
@@ -62,7 +101,7 @@ class Profile extends React.Component {
                                    shrink: true,
                                }}
                     />
-                    <Filter />
+                    <Filter ref={this.cityRef} />
                     {/*TODO add userKind*/}
                     <br/><br/>
                     <Button className="logInButton" variant="contained" color="secondary"
@@ -70,7 +109,7 @@ class Profile extends React.Component {
                         Submit
                     </Button>
                 </Grid>
-                <Grid items md={4} xs={3}/>
+                <Grid item md={4} xs={3}/>
             </Grid>
         )
     }

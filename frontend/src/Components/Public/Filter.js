@@ -17,7 +17,7 @@ class Filter extends React.Component {
     componentDidMount(){
         this.fetchCities();
     }
-    fetchCities(){// TODO ??
+    fetchCities(){
         axios.get("/events/api/cities")
             .then(response => {
                 this.setState({cities: response.data.cities});
@@ -44,7 +44,7 @@ class Filter extends React.Component {
                         <em>Any</em>
                     </MenuItem>
                     {this.state.cities.map(city =>
-                        <MenuItem value={city.name}>{city.name}</MenuItem>
+                        <MenuItem key={city.name} value={city.name}>{city.name}</MenuItem>
                     )}
                 </Select>
             </FormControl>

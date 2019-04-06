@@ -28,14 +28,14 @@ class Login extends React.Component {
         const {classes} = this.props;
         return (
             <Grid container>
-                <Grid items md={4} xs={3}/>
-                <Grid items md={4} xs={6} style={{textAlign:"left"}}>
+                <Grid item md={4} xs={3}/>
+                <Grid item md={4} xs={6} style={{width:"100%"}}>
                     <Button className={classes.githubLogin} variant="contained" color="primary"
                             href="http://54.36.182.56:3001/auth/github-events">
                         Log in with GitHub
                     </Button>
                 </Grid>
-                <Grid items md={4} xs={3}/>
+                <Grid item md={4} xs={3}/>
             </Grid>
         )
     }
