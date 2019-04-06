@@ -11,8 +11,20 @@ import Grid from '@material-ui/core/Grid';
 
 class MainPage extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.cityRef = React.createRef();
+        this.eventsRef = React.createRef();
+    }
+
+    triggerEventsUpdate = () => {
+        if(this.eventsRef.current)
+            this.eventsRef.current.updateEvents();
+    };
+
     getEvents = () => {
-        return axios.get('/events/api/')
+        console.log("Fetching events for "+this.cityRef.current.state.chosenCity);
+        return axios.get('/events/api/get-all/'+this.cityRef.current.state.chosenCity)
             .then(response => {
                 let sortedEvents = response.data.events;
                 sortedEvents.sort((a, b) => {
@@ -24,7 +36,7 @@ class MainPage extends React.Component {
                 swal("Error","Could not fetch events list", "error");
                 console.error(error);
                 return [];
-            });
+            })
     };
 
     render() {
@@ -33,10 +45,10 @@ class MainPage extends React.Component {
                 <Grid container>
                     <Grid item md={8} xs={9}/>
                     <Grid item xs={2} style={{textAlign: "right"}}>
-                        <Filter/>
+                        <Filter ref={this.cityRef} updateEvents={this.triggerEventsUpdate} />
                     </Grid>
                 </Grid>
-                <Events getEvents={this.getEvents}/>
+                <Events ref={this.eventsRef} getEvents={this.getEvents}/>
             </div>
         )
     }

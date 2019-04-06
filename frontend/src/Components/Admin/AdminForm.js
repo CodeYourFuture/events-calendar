@@ -30,7 +30,7 @@ class AdminForm extends React.Component {
     }
     componentDidMount(){
         if(this.props.match.params.id){
-            axios.get(`/events/api/${this.props.match.params.id}`)
+            axios.get(`/events/api/get-one/${this.props.match.params.id}`)
                 .then(response => {
                     let curEvent = response.data.event;
                     this.lessonRef.current.value = curEvent.name;
@@ -93,7 +93,7 @@ class AdminForm extends React.Component {
             address: this.addressRef.current.value
         };
         if(this.props.match.params.id) {
-            axios.put("/events/api/" + this.props.match.params.id, body)
+            axios.put("/events/api/edit/" + this.props.match.params.id, body)
                 .then(response => {
                     this.props.history.push("/");
                 })
@@ -103,7 +103,7 @@ class AdminForm extends React.Component {
                 });
         }
         else{
-            axios.post("/events/api/", body)
+            axios.post("/events/api/create/", body)
                 .then(response => {
                     this.props.history.push("/");
                 })

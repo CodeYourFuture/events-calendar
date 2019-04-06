@@ -12,7 +12,12 @@ class Filter extends React.Component {
         cities: []
     };
     handleChange = event => {
-        this.setState({[event.target.name]: event.target.value});
+        this.setState({chosenCity: event.target.value},
+            () => {
+                if(this.props.updateEvents)
+                    this.props.updateEvents(event.target.value);
+            }
+        );
     };
     componentDidMount(){
         this.fetchCities();
