@@ -33,6 +33,7 @@ class Profile extends React.Component {
         this.lastNameRef.current.value = user.lastName || "";
         this.emailRef.current.value = user.email || "";
         this.cityRef.current.setState({ chosenCity: user.city || "Any"});
+        localStorage.setItem('city', user.city);
     };
     getProfileData(){
         axios.get("/events/api/user/"+AuthService.getProfile().id)

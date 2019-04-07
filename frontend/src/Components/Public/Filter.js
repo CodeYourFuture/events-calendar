@@ -8,7 +8,7 @@ import axios from "axios"
 
 class Filter extends React.Component {
     state = {
-        chosenCity: "Any",
+        chosenCity: localStorage.getItem('city') || "Any",
         cities: []
     };
     handleChange = event => {

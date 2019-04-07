@@ -58,11 +58,12 @@ class AuthService {
     setToken(idToken) {
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken);
+        localStorage.setItem('city', decode(idToken).city);
     }
 
     getToken = () => {
         // Retrieves the user token from localStorage
-        const token = localStorage.getItem('id_token')
+        const token = localStorage.getItem('id_token');
         if (token) {
             return token
         } else return null
@@ -71,6 +72,7 @@ class AuthService {
     logout = () => {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
+        localStorage.removeItem('city');
     };
 
     getProfile = () => {
