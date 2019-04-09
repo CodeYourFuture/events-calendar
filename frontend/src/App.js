@@ -30,7 +30,7 @@ class App extends Component {
                         <Route
                             exact
                             path="/admin/floaters/:id?"
-                            render={() => <Floaters />}
+                            render={(props) => <Floaters {...props} />}
                         />
                         <Route path="/admin/events/add" component={AdminForm} />
                         <Route

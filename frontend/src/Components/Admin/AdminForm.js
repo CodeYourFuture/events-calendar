@@ -14,7 +14,8 @@ moment.locale("en");
 class AdminForm extends React.Component {
     state = {
         date: undefined,
-        eventDateError: ""
+        eventDateError: "",
+        editing : false,
     };
     constructor(props) {
         super(props);
@@ -30,6 +31,7 @@ class AdminForm extends React.Component {
     }
     componentDidMount(){
         if(this.props.match.params.id){
+            this.setState({editing: true});
             axios.get(`/events/api/get-one/${this.props.match.params.id}`)
                 .then(response => {
                     let curEvent = response.data.event;
@@ -115,10 +117,23 @@ class AdminForm extends React.Component {
 
     };
 
+    deleteEvent = e => {
+        e.preventDefault();
+        axios.delete("/events/api/delete/"+this.props.match.params.id)
+            .then(response => {
+                this.props.history.push("/");
+            })
+            .catch(error => {
+                swal("Error", "Could not delete event", "error");
+                console.error(error);
+            });
+    };
+
     render() {
         return (
             <div className="container mt-2">
-                <h1 className="text-center mb-3">Add Events</h1>
+                <h1 className="text-center mb-3">
+                    Edit Event</h1>
                 <form>
                     <div className="form-group">
                         <div className="container">
@@ -266,6 +281,11 @@ class AdminForm extends React.Component {
                                             onClick={e => this.onSubmit(e)} >
                                             Submit
                                         </Button>
+                                        {this.state.editing ? <Button
+                                            variant="contained" color="secondary"
+                                            onClick={e => this.deleteEvent(e)} >
+                                            Delete
+                                        </Button> : null}
 
                                         <Button component={Link}
                                                 variant="contained" color="primary"

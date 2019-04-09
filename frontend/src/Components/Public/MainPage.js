@@ -8,6 +8,9 @@ import Filter from "./Filter"
 import swal from "sweetalert"
 import axios from "axios"
 import Grid from '@material-ui/core/Grid';
+import AuthService from "../Services/AuthService";
+import Button from "@material-ui/core/Button"
+import {Link} from "react-router-dom";
 
 class MainPage extends React.Component {
 
@@ -23,8 +26,10 @@ class MainPage extends React.Component {
     };
 
     getEvents = () => {
-        console.log("Fetching events for "+this.cityRef.current.state.chosenCity);
-        return axios.get('/events/api/get-all/'+this.cityRef.current.state.chosenCity)
+        let city = this.cityRef.current.state.chosenCity;
+        let userId = AuthService.loggedIn() ? AuthService.getProfile().id : "";
+        console.log("Fetching events for "+city+" and user "+userId);
+        return axios.get(`/events/api/get-all/${city}/${userId}`)
             .then(response => {
                 let sortedEvents = response.data.events;
                 sortedEvents.sort((a, b) => {
@@ -43,7 +48,15 @@ class MainPage extends React.Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item md={8} xs={9}/>
+                    <Grid item md={2} xs={1}/>
+                    <Grid item xs={2}>
+                        {AuthService.loggedIn() && AuthService.isAdmin() ?
+                            <Button variant="contained" color="secondary"
+                                    component={Link} to={"/admin/event/"}>Add
+                            </Button>
+                            : null}
+                    </Grid>
+                    <Grid item md={4} xs={5}/>
                     <Grid item xs={2} style={{textAlign: "right"}}>
                         <Filter ref={this.cityRef} updateEvents={this.triggerEventsUpdate} />
                     </Grid>

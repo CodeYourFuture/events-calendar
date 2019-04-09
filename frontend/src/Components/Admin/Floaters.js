@@ -39,7 +39,7 @@ class Floaters extends React.Component {
 
     getMentors = () => {
         //if event id is blank, fetch general list
-        axios.get("/events/api/volunteers/" + this.state.eventId)
+        axios.get("/events/api/get-volunteers/" + this.state.eventId)
             .then(response => {
                 this.setState({volunteers: response.data.volunteers});
             })
@@ -51,12 +51,16 @@ class Floaters extends React.Component {
 
     componentDidMount() {
         if (this.props.match && this.props.match.params.id)
-            this.setState({eventId: this.props.match.params.id})
-        this.getMentors();
+            this.setState({
+                    eventId: this.props.match.params.id
+                },
+                () => {this.getMentors()} );
+        else
+            this.getMentors();
     }
 
     removeFloater = id => {
-        axios.delete("/events/api/volunteers/" + id)
+        axios.delete("/events/api/remove-volunteer/" + this.state.eventId, {data:{userId: id}})
             .then(response => {
                 this.getMentors();
             })
@@ -92,13 +96,13 @@ class Floaters extends React.Component {
                                         <Button variant="contained" color="primary">
                                             <EditIcon/>
                                         </Button>
-                                    </TableCell>
+                                    </TableCell>*/}
                                     <TableCell>
                                         <Button variant="contained" color="primary"
                                          onClick={() => this.removeFloater(vol._id)}>
                                             <CancelIcon/>
                                         </Button>
-                                    </TableCell>*/}
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

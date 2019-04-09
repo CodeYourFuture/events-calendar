@@ -13,11 +13,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Hidden from '@material-ui/core/Hidden'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import AuthService from "../Services/AuthService"
 
-import { withStyles } from '@material-ui/styles';
+import {withStyles} from '@material-ui/styles';
 import PropTypes from 'prop-types';
+import swal from "sweetalert";
+import axios from "axios/index";
 
 const styles = theme => ({
     gridItem: {
@@ -29,33 +31,62 @@ class Event extends React.Component {
 
     state = {
         numVolunteersNeeded: this.props.event.numVolunteersNeeded,
+        volunteersCount: this.props.event.volunteersCount,
         isVolunteering: this.props.event.isVolunteering || false,
     };
-    constructor(props){
+
+    constructor(props) {
         super(props);
     }
 
-    submitVolunteer(event){
+    volunteerSlotsLeft(){
+        return Math.max(0,this.state.numVolunteersNeeded - this.state.volunteersCount);
+    }
+
+    getVolunteerCount() {
+        axios.get("/events/api/get-volunteer-count/" + this.props.event._id)
+            .then(response => {
+                this.setState({
+                    volunteersCount: response.data.count,
+                })
+            })
+            .catch(error => {
+                swal("Error", "Failed to get volunteers count", "error");
+                console.error(error);
+            })
+    }
+
+    submitVolunteer(event) {
         event.stopPropagation();
-        if(!this.state.isVolunteering) {
-            //TODO: submit volunteer id derived from userId
-            //in case of success
-            this.setState({
-                numVolunteersNeeded: Math.max(0, this.state.numVolunteersNeeded - 1),
-                isVolunteering : true,
-            });
+        if (this.state.isVolunteering) {
+            axios.delete("/events/api/remove-volunteer/" + this.props.event._id,
+                        {data: {userId: AuthService.getProfile().id}}
+                        )
+                .then(response => {
+                    this.getVolunteerCount();
+                    this.setState({isVolunteering: false})
+                })
+                .catch(error => {
+                    swal("Error", "Could not remove volunteer", "error");
+                    console.error(error);
+                });
         }
-        else{
-            //TODO: submit volunteer id derived from userId
-            //in case of success
-            this.setState({
-                numVolunteersNeeded: this.state.numVolunteersNeeded + 1,
-                isVolunteering : false,
-            });
+        else {
+            axios.post("/events/api/add-volunteer/" + this.props.event._id,
+                {userId: AuthService.getProfile().id}
+            )
+                .then(response => {
+                    this.getVolunteerCount();
+                    this.setState({isVolunteering: true})
+                })
+                .catch(error => {
+                    swal("Error", "Could not remove volunteer", "error");
+                    console.error(error);
+                });
         }
     }
 
-    render(){
+    render() {
         const {classes} = this.props;
         return (
             <ExpansionPanel style={{marginBottom: "1em"}}>
@@ -70,7 +101,7 @@ class Event extends React.Component {
                         <Grid item xs={6} className={classes.gridItem}>
                             <h2 className="font-weight-bold">{this.props.event.name}</h2>
                             <p className="mt-2">
-                                <strong>{this.state.numVolunteersNeeded}</strong> more volunteers
+                                <strong>{this.volunteerSlotsLeft()}</strong> more volunteers
                                 needed
                             </p>
                         </Grid>
@@ -84,9 +115,9 @@ class Event extends React.Component {
                                 </Button> :
                                 <Button variant="contained" color="primary"
                                         onClick={e => this.submitVolunteer(e)}>
-                                    <Hidden mdDown>Cancel &nbsp; &nbsp; &nbsp;</Hidden>
+                                    <Hidden mdDown>Withdraw &nbsp; &nbsp;</Hidden>
                                     <RemoveIcon/>
-                                </Button> }
+                                </Button>}
                         </Grid>
                     </Grid>
                 </ExpansionPanelSummary>
@@ -99,10 +130,10 @@ class Event extends React.Component {
                         <Grid item xs={1}/>
 
                         <Grid item xs={3} className={classes.gridItem}>
-                            <p style={{marginBottom: "0"}}>Address: </p>
+                            {/*<p style={{marginBottom: "0"}}>Address: </p>*/}
                             <a href={"https://www.google.com/maps/search/?api=1&query=" +
                             encodeURI(this.props.event.city + ", " + this.props.event.address)
-                            }> {this.props.event.address}</a>
+                            } target="_blank"> {this.props.event.city + ", " + this.props.event.address}</a>
                         </Grid>
                         <Grid item xs={1}/>
 
@@ -111,25 +142,27 @@ class Event extends React.Component {
                                 href={this.props.event.syllabusUrl} target="_blank">Syllabus
                             </a>
                         </Grid>
-                        <Grid item xs={12} style={{textAlign:"justify"}}>
+                        <Grid item xs={12} style={{textAlign: "justify"}}>
                             {this.props.event.description ?
                                 <p className="eventDescription">{this.props.event.description}</p>
                                 : <p> No description provided </p>}
                         </Grid>
-                        <Grid item xs={12} className={classes.gridItem}>
-                            <Button component={Link} to={"/admin/event/" + this.props.event._id}
-                                    variant="contained" color="secondary">
-                                Details &nbsp;
-                                <EditIcon/>
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} className={classes.gridItem}>
-                            <Button component={Link} to={"/admin/floaters/" + this.props.event._id}
-                                    variant="contained" color="secondary">
-                                Volunteers &nbsp;
-                                <EditIcon/>
-                            </Button>
-                        </Grid>
+                        {AuthService.loggedIn() && AuthService.isAdmin() ?
+                            <Grid item xs={12} className={classes.gridItem}>
+                                <Button component={Link} to={"/admin/event/" + this.props.event._id}
+                                        variant="contained" color="secondary">
+                                    Details &nbsp;
+                                    <EditIcon/>
+                                </Button>
+                            </Grid> : null}
+                        {AuthService.loggedIn() && AuthService.isAdmin() ?
+                            <Grid item xs={12} className={classes.gridItem}>
+                                <Button component={Link} to={"/admin/floaters/" + this.props.event._id}
+                                        variant="contained" color="secondary">
+                                    Volunteers &nbsp;
+                                    <EditIcon/>
+                                </Button>
+                            </Grid> : null}
                     </Grid>
                 </ExpansionPanelDetails>
             </ExpansionPanel>
