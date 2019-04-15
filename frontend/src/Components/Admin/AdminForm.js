@@ -1,16 +1,21 @@
 import React from "react";
-import Message from "../../Message/Message";
 import { withRouter } from 'react-router'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment";
+import swal from "sweetalert"
+import axios from "axios"
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom'
+
 moment.locale("en");
 
-class Form extends React.Component {
+class AdminForm extends React.Component {
     state = {
-        message: false,
         date: undefined,
-        eventDateError: ""
+        eventDateError: "",
+        editing : false,
     };
     constructor(props) {
         super(props);
@@ -25,11 +30,11 @@ class Form extends React.Component {
         this.addressRef = React.createRef();
     }
     componentDidMount(){
-        if(this.props._id){
-            fetch(`/events/api/${this.props._id}`)
-                .then(res => res.json())
-                .then(data => {
-                    let curEvent = data.event;
+        if(this.props.match.params.id){
+            this.setState({editing: true});
+            axios.get(`/events/api/get-one/${this.props.match.params.id}`)
+                .then(response => {
+                    let curEvent = response.data.event;
                     this.lessonRef.current.value = curEvent.name;
                     this.setState({
                         date: moment(curEvent.date)
@@ -41,6 +46,10 @@ class Form extends React.Component {
                     this.cityRef.current.value = curEvent.city;
                     this.syllabusUrlRef.current.value = curEvent.syllabusUrl;
                     this.addressRef.current.value = curEvent.address;
+                })
+                .catch(error =>{
+                    swal("Error","Could not fetch event data", "error");
+                    console.error(error);
                 });
         }
     }
@@ -85,46 +94,46 @@ class Form extends React.Component {
             syllabusUrl: this.syllabusUrlRef.current.value,
             address: this.addressRef.current.value
         };
-        if(this.props._id) {
-            fetch("/events/api/" + this.props._id, {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                method: "put",
-                body: JSON.stringify(body)
-            })
-                .then(() => {
-                    this.props.history.push("/admin/event/" + this.props._id);
+        if(this.props.match.params.id) {
+            axios.put("/events/api/edit/" + this.props.match.params.id, body)
+                .then(response => {
+                    this.props.history.push("/");
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    swal("Error", "Could not update event data", "error");
+                    console.error(error);
+                });
         }
         else{
-            fetch("/events/api", {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(body)
-            })
-                .then(() => {
-                    this.props.history.push("/admin/events")
+            axios.post("/events/api/create/", body)
+                .then(response => {
+                    this.props.history.push("/");
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    swal("Error", "Could not upload event data", "error");
+                    console.error(error);
+                });
         }
 
+    };
+
+    deleteEvent = e => {
+        e.preventDefault();
+        axios.delete("/events/api/delete/"+this.props.match.params.id)
+            .then(response => {
+                this.props.history.push("/");
+            })
+            .catch(error => {
+                swal("Error", "Could not delete event", "error");
+                console.error(error);
+            });
     };
 
     render() {
         return (
             <div className="container mt-2">
-                <Message
-                    show={this.state.message}
-                    status="success"
-                    message="New event is added"
-                />
-                <h1 className="text-center mb-3">Add Events</h1>
+                <h1 className="text-center mb-3">
+                    Edit Event</h1>
                 <form>
                     <div className="form-group">
                         <div className="container">
@@ -267,19 +276,22 @@ class Form extends React.Component {
                                         className="btn-toolbar justify-content-between"
                                         role="toolbar"
                                     >
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={e => this.onSubmit(e)}
-                                        >
+                                        <Button
+                                            variant="contained" color="primary"
+                                            onClick={e => this.onSubmit(e)} >
                                             Submit
-                                        </button>
+                                        </Button>
+                                        {this.state.editing ? <Button
+                                            variant="contained" color="secondary"
+                                            onClick={e => this.deleteEvent(e)} >
+                                            Delete
+                                        </Button> : null}
 
-                                        <a
-                                            className="btn btn-primary "
-                                            href="/admin/events"
-                                        >
-                                            Back
-                                        </a>
+                                        <Button component={Link}
+                                                variant="contained" color="primary"
+                                                to="/" >
+                                            Cancel
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
@@ -290,4 +302,4 @@ class Form extends React.Component {
         );
     }
 }
-export default withRouter(Form)
+export default withRouter(AdminForm)

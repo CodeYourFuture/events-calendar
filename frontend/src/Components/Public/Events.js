@@ -1,43 +1,55 @@
 import React from "react";
 import Event from "./Event.js";
 import "../../Style/Event.css";
-import NavBar from "../NavBar";
-import "../../Style/Events.css";
+import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Events extends React.Component {
 
     state = {
-        events: []
+        events: [],
+        loading: true,
     };
-    componentDidMount() {
-        this.props.fetchEvents().then(
-            data => {this.setState({
-                events: data });
+
+    updateEvents() {
+        this.setState({loading: true});
+        this.props.getEvents().then(
+            data => {
+                this.setState({
+                        events: data,
+                        loading: false
+                    });
             });
     }
-    render(){
+
+    componentDidMount() {
+        this.updateEvents();
+    }
+
+    render() {
         return (
-            <div className="events">
-                <NavBar>
-                    <h1 className="myHeader ml-5 ">Events</h1>
-                </NavBar>
-                {this.state.events.map(function(event, i) {
-                    return (
-                        <Event
-                            key={i}
-                            _id={event._id}
-                            name={event.name}
-                            event={event}
-                            date={event.date}
-                            address={event.address}
-                            country={event.country}
-                            city={event.city}
-                            syllabusUrl={event.syllabusUrl}
-                            numVolunteersNeeded={event.numVolunteersNeeded}
-                        />
-                    );
-                })}
-            </div>
+            <Grid container alignItems="center">
+                <Grid item md={2}/>
+                <Grid item md={8} xs={12} className="events">
+                    {this.state.events.map(function (event, i) {
+                        return (
+                            <Event
+                                key={i}
+                                event={event}
+                            />
+                        );
+                    })}
+                    {this.state.loading ?
+                        <h2 style={{textAlign: "center"}}>Loading...</h2>
+                        // <CircularProgress/>
+                        : null}
+                    {!this.state.loading && this.state.events.length === 0 ?
+                        <h2 style={{textAlign: "center"}}>No events found</h2>
+                        : null}
+                </Grid>
+                <Grid item md={2}/>
+            </Grid>
+
         );
     };
 }
